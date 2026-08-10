@@ -284,7 +284,7 @@
           </a>
           <a href="https://voxera.ch/datenschutz" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Datenschutzerklärung v2.1
+            Datenschutzerklärung v2.2
           </a>
           <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--g600);">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -317,7 +317,7 @@
         </label>
         <label class="checkbox">
           <input id="confirmDse" type="checkbox" />
-          <span style="font-size:13.5px;">Ich habe die <a href="https://voxera.ch/datenschutz" target="_blank" style="color:var(--blue);font-weight:600;">Datenschutzerklärung (v2.1)</a> gelesen und nehme sie zur Kenntnis.</span>
+          <span style="font-size:13.5px;">Ich habe die <a href="https://voxera.ch/datenschutz" target="_blank" style="color:var(--blue);font-weight:600;">Datenschutzerklärung (v2.2)</a> gelesen und nehme sie zur Kenntnis.</span>
         </label>
       </div>
 
@@ -570,7 +570,7 @@ async function submitAcceptance() {
       token,signer_name,signer_email,signature_data,
       agb_accepted,agb_version:'v2.0-2026-07-03',
       avv_accepted,avv_version:'v1.0-2026-05-01',
-      dse_accepted,dse_version:'v2.1-2026-08-10',
+      dse_accepted,dse_version:'v2.2-2026-08-10',
       confirm_accepted:agb_accepted&&avv_accepted&&dse_accepted
     })
   });

@@ -40,16 +40,21 @@ async function htmlDateien(dir) {
 const einmal = (s, re) => (s.match(re) || []).length;
 const inhalt = (s, re) => (s.match(re)?.[1] ?? '').trim();
 
-// Wortwoertlich aus voxera-website-live uebernommene Seiten. Sie liegen in
-// public/ und sind der Vertragsweg: Kunden-Dashboard und Offertenversand
-// deeplinken mit Token hierher, und ihr ausgelieferter Text ist der, dem
-// Kunden zugestimmt haben.
+// Aus voxera-website-live uebernommene Seiten. Sie liegen in public/ und sind
+// der Vertragsweg: Kunden-Dashboard und Offertenversand deeplinken mit Token
+// hierher, und ihr ausgelieferter Text ist der, dem Kunden zugestimmt haben.
+//
+// contract-signed.html ist byte-identisch mit der Quelle. offer-accept.html
+// war es bis zur Anhebung der Datenschutzerklaerung auf v2.2: dort stehen
+// drei Versionsstempel, und ein Stempel, der nicht zum ausgelieferten Text
+// passt, ist genau der Fehler, den der Hotfix vom 10.08. behoben hat. Die
+// drei Zeilen sind mitgezogen, sonst ist die Datei unveraendert.
 //
 // Sie werden hier NICHT nach Marketing-SEO beurteilt. Description, Canonical
-// und Bildmasse nachzuruesten hiesse, den Auslieferungsstand zu aendern --
-// und der muss byte-identisch bleiben. Aus der Suche sind sie ohnehin
-// genommen: netlify.toml setzt X-Robots-Tag noindex, und der Sitemap-Filter
-// in astro.config.mjs schliesst sie aus.
+// und Bildmasse nachzuruesten hiesse, den Auslieferungsstand inhaltlich zu
+// aendern. Aus der Suche sind sie ohnehin genommen: netlify.toml setzt
+// X-Robots-Tag noindex, und der Sitemap-Filter in astro.config.mjs schliesst
+// sie aus.
 //
 // Statt sie nur zu ueberspringen, wird ihr VORHANDENSEIN geprueft. Genau das
 // war das Risiko, das netlify.toml als TODO festhielt: fehlen sie im Build,
@@ -238,5 +243,5 @@ if (offeneStellen.length) {
 }
 
 console.log(`\n${dateien.length} Seiten geprueft — ${fehler.length} Fehler, ${warnungen.length} Warnungen, ${offeneStellen.length} Seiten mit Platzhaltern, ${new Set(fehlendeAssets).size} fehlende Assets.`);
-console.log(`${WORTWOERTLICH.length} wortwoertlich uebernommene Seiten vorhanden, von der SEO-Pruefung ausgenommen: ${WORTWOERTLICH.join(', ')}`);
+console.log(`${WORTWOERTLICH.length} aus voxera-website-live uebernommene Seiten vorhanden, von der SEO-Pruefung ausgenommen: ${WORTWOERTLICH.join(', ')}`);
 if (fehler.length) process.exit(1);

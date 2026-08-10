@@ -1,15 +1,25 @@
 ---
 /**
- * Datenschutzerklärung. Text wortwörtlich aus voxera-website-live,
- * Version 2.1 vom 10.08.2026, übernommen mit Commit 572bf33 — also die
- * Fassung NACH dem Content-Hotfix, mit den angepassten Aufbewahrungsfristen
- * in Abschnitt 7 (Audio und Transkripte 90 Tage, Anrufdaten 180 Tage).
- * Inhaltlich ist nichts geändert.
+ * Datenschutzerklärung, Version 2.2 vom 10.08.2026.
+ *
+ * Grundlage ist der Text aus voxera-website-live (Version 2.1, Commit
+ * 572bf33) — die Fassung nach dem Content-Hotfix, mit den angepassten
+ * Aufbewahrungsfristen in Abschnitt 7.
+ *
+ * Geändert gegenüber v2.1 ist ausschliesslich Abschnitt 11: Der dort
+ * zitierte Hinweis am Gesprächsanfang beschrieb einen Satz, den der
+ * Assistent nie gesprochen hat. Ausgeliefert wurde bis 10.08.2026 nur die
+ * Aufzeichnungs-Ansage. Behoben ist das in voxera-platform (PR #919); hier
+ * steht jetzt der Satz, der tatsächlich gesprochen wird. Die Einwilligung
+ * durch Fortführen ist entfallen, weil sie nicht gesprochen wird.
  *
  * Version und Stand stehen im Vertragsprozess: der Zustimmungsstempel in
- * offer-accept.html verweist auf genau diese Fassung. Wer den Text ändert,
- * muss die Version hier UND den Stempel dort anheben — sonst entsteht
- * wieder der Fehler, den der Hotfix behoben hat.
+ * public/offer-accept.html verweist auf genau diese Fassung. Wer den Text
+ * ändert, muss die Version hier UND den Stempel dort anheben — sonst
+ * entsteht wieder der Fehler, den der Hotfix behoben hat. Genau deshalb
+ * ist offer-accept.html mit dieser Änderung auf v2.2 gezogen worden und
+ * nicht mehr byte-identisch mit voxera-website-live; dort steht die
+ * Anhebung noch aus.
  */
 import Recht from '../layouts/Recht.astro';
 ---
@@ -17,7 +27,7 @@ import Recht from '../layouts/Recht.astro';
   titel="Datenschutzerklärung | Voxera"
   beschreibung="Welche Daten Voxera erhebt, auf welcher Grundlage, wer sie erhält, wie lange sie gespeichert werden und welche Rechte Sie haben."
   ueberschrift="Datenschutzerklärung"
-  stand="Stand: 10. August 2026 · Voxera, Schweiz · Version 2.1"
+  stand="Stand: 10. August 2026 · Voxera, Schweiz · Version 2.2"
 >
   <div class="karte">
     <p>Voxera nimmt den Schutz Ihrer persönlichen Daten ernst. Diese Datenschutzerklärung informiert Sie umfassend darüber, welche Daten wir zu welchem Zweck erheben, an wen wir sie weitergeben und welche Rechte Sie haben.</p>
@@ -186,12 +196,12 @@ import Recht from '../layouts/Recht.astro';
     <p class="sek-num">11. KI-Telefonie</p>
     <h2>Besonderheiten bei der KI-Telefonie</h2>
     <p>Im Rahmen unseres KI-Telefonassistenten («Lara») werden Telefongespräche automatisch entgegengenommen, transkribiert und mittels KI verarbeitet.</p>
-    <h3>Disclosure am Gesprächsanfang</h3>
+    <h3>Hinweis am Gesprächsanfang</h3>
     <p>Voxera stellt sicher, dass jeder Anrufer zu Beginn des Gesprächs in folgender oder vergleichbarer Form informiert wird:</p>
     <div class="karte">
-      <p>«Guten Tag, Sie sprechen mit der KI-Assistentin von [Kundenname]. Dieses Gespräch wird zu Servicezwecken automatisch verarbeitet. Mit dem Fortführen erklären Sie sich damit einverstanden. Falls Sie nicht einverstanden sind, beenden Sie bitte das Gespräch oder fordern Sie eine Weiterleitung an einen Menschen an.»</p>
+      <p>«Grüezi, hier spricht [Name], die digitale Assistentin von [Kundenname], das Gespräch wird aufgezeichnet. Wenn Sie lieber mit einem Menschen sprechen, sagen Sie es mir jederzeit. Wie kann ich Ihnen helfen?»</p>
     </div>
-    <p>Der Voxera-Kunde ist verpflichtet, diese Disclosure-Funktion korrekt zu konfigurieren und in seinem operativen Betrieb einzusetzen.</p>
+    <p>Der Hinweis wird technisch erzwungen und lässt sich nicht abschalten: Auch wenn ein Geschäftskunde eine eigene Begrüssung hinterlegt, wird er ihr vorangestellt.</p>
     <h3>Verarbeitete Daten</h3>
     <ul>
       <li><strong>Audio des Gesprächs:</strong> Verarbeitung in Echtzeit; kurzfristige Zwischenspeicherung im Rahmen des technisch Notwendigen</li>

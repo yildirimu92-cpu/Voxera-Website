@@ -10,8 +10,14 @@
  * zitierte Hinweis am Gesprächsanfang beschrieb einen Satz, den der
  * Assistent nie gesprochen hat. Ausgeliefert wurde bis 10.08.2026 nur die
  * Aufzeichnungs-Ansage. Behoben ist das in voxera-platform (PR #919); hier
- * steht jetzt der Satz, der tatsächlich gesprochen wird. Die Einwilligung
- * durch Fortführen ist entfallen, weil sie nicht gesprochen wird.
+ * steht jetzt der Satz, der tatsächlich gesprochen wird.
+ *
+ * Zwei Zusagen sind dabei entfallen, beide weil sie nicht eingelöst werden:
+ * die Einwilligung durch Fortführen wird nicht gesprochen, und die
+ * Weiterleitung an einen Menschen gibt es im Produkt gar nicht — dem
+ * Assistenten steht als einziges Werkzeug der Kalender zur Verfügung, eine
+ * Transfer-Funktion existiert nicht. Eine Datenschutzerklärung, die beides
+ * zusichert, wäre in beiden Punkten unzutreffend gewesen.
  *
  * Version und Stand stehen im Vertragsprozess: der Zustimmungsstempel in
  * public/offer-accept.html verweist auf genau diese Fassung. Wer den Text
@@ -199,7 +205,7 @@ import Recht from '../layouts/Recht.astro';
     <h3>Hinweis am Gesprächsanfang</h3>
     <p>Voxera stellt sicher, dass jeder Anrufer zu Beginn des Gesprächs in folgender oder vergleichbarer Form informiert wird:</p>
     <div class="karte">
-      <p>«Grüezi, hier spricht [Name], die digitale Assistentin von [Kundenname], das Gespräch wird aufgezeichnet. Wenn Sie lieber mit einem Menschen sprechen, sagen Sie es mir jederzeit. Wie kann ich Ihnen helfen?»</p>
+      <p>«Grüezi, hier spricht [Name], die digitale Assistentin von [Kundenname], das Gespräch wird aufgezeichnet. Wie kann ich Ihnen helfen?»</p>
     </div>
     <p>Der Hinweis wird technisch erzwungen und lässt sich nicht abschalten: Auch wenn ein Geschäftskunde eine eigene Begrüssung hinterlegt, wird er ihr vorangestellt.</p>
     <h3>Verarbeitete Daten</h3>

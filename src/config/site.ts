@@ -47,6 +47,18 @@ export const BRANCHEN = [
   },
 ] as const;
 
+/** Die Branchen, die ausgeliefert werden.
+ *
+ *  `gesperrt` allein reichte nicht: es setzte die Seite nur auf noindex und
+ *  nahm sie aus der Sitemap. Gegen Google half das, gegen Besucher nicht --
+ *  der Footer verlinkte sie von JEDER Seite aus, die Startseite eingeschlossen.
+ *  Eine Platzhalterseite war damit immer einen Klick entfernt.
+ *
+ *  Diese Liste ist deshalb die eine Quelle fuer alles, was auf eine
+ *  Branchenseite zeigt oder sie erzeugt. Faellt `gesperrt` weg, erscheint die
+ *  Seite ueberall wieder, ohne dass irgendwo sonst etwas anzupassen waere. */
+export const BRANCHEN_SICHTBAR = BRANCHEN.filter((b) => !('gesperrt' in b));
+
 /** Ratgeber-Kategorien. Bewusst wenige und fix — Tag-Archive erzeugen bei
  *  wenigen Artikeln genau die Duennseiten, die vermieden werden sollen. */
 export const RATGEBER_KATEGORIEN = [

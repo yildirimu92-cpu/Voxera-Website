@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { BRANCHEN } from '../../config/site';
+import { BRANCHEN_SICHTBAR } from '../../config/site';
 ---
 <Base
   titel="Telefonservice für Schweizer KMU nach Branche | Voxera"
@@ -15,7 +15,7 @@ import { BRANCHEN } from '../../config/site';
         Notfallanruf fragt, unterscheidet sich in der Zahnarztpraxis von der Baustelle.
       </p>
       <ul role="list" class="liste">
-        {BRANCHEN.map((b) => (
+        {BRANCHEN_SICHTBAR.map((b) => (
           <li>
             <a class="karte" href={`/branchen/${b.slug}/`}>
               <h2>{b.titel}</h2>

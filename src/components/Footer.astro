@@ -1,5 +1,5 @@
 ---
-import { SITE, NAV, BRANCHEN } from '../config/site';
+import { SITE, NAV, BRANCHEN_SICHTBAR } from '../config/site';
 const jahr = 2026;
 ---
 <footer class="fuss">
@@ -20,7 +20,7 @@ const jahr = 2026;
       <div>
         <h2 class="titel">Branchen</h2>
         <ul role="list">
-          {BRANCHEN.map((b) => <li><a href={`/branchen/${b.slug}/`}>{b.titel}</a></li>)}
+          {BRANCHEN_SICHTBAR.map((b) => <li><a href={`/branchen/${b.slug}/`}>{b.titel}</a></li>)}
         </ul>
       </div>
 

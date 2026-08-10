@@ -1,11 +1,11 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
-import { BRANCHEN, SITE } from '../../config/site';
+import { BRANCHEN_SICHTBAR, SITE } from '../../config/site';
 import { INHALTE } from '../../config/branchen-inhalte';
 
 export function getStaticPaths() {
-  return BRANCHEN.map((b) => ({ params: { slug: b.slug }, props: { branche: b } }));
+  return BRANCHEN_SICHTBAR.map((b) => ({ params: { slug: b.slug }, props: { branche: b } }));
 }
 
 const { branche } = Astro.props;

@@ -64,14 +64,22 @@ const fmt = (x: Date) => x.toLocaleDateString('de-CH', { day: '2-digit', month: 
       <div class="text"><Content /></div>
 
       {/* Jeder Artikel verlinkt genau eine Branchenseite. So entsteht die
-          Verzahnung beim Schreiben und nicht als Aufraeumaktion. */}
-      <aside class="karte weiter">
-        <h2>Passend dazu</h2>
-        <p class="leise">
-          Wie das konkret bei {branche.titel} aussieht, steht auf der Branchenseite.
-        </p>
-        <p><a class="knopf" href={`/branchen/${branche.slug}/`}>{branche.titel}</a></p>
-      </aside>
+          Verzahnung beim Schreiben und nicht als Aufraeumaktion.
+
+          Ausser die Branche ist gesperrt: dann wird ihre Seite nicht erzeugt,
+          und der Verweis ginge ins Leere. Das Schema in content/config.ts
+          laesst gesperrte Slugs weiterhin zu -- ein Artikel darf zu einer
+          Branche existieren, bevor ihre Seite steht. Nur verlinken laesst er
+          sie dann nicht. */}
+      {!('gesperrt' in branche) && (
+        <aside class="karte weiter">
+          <h2>Passend dazu</h2>
+          <p class="leise">
+            Wie das konkret bei {branche.titel} aussieht, steht auf der Branchenseite.
+          </p>
+          <p><a class="knopf" href={`/branchen/${branche.slug}/`}>{branche.titel}</a></p>
+        </aside>
+      )}
     </div>
   </article>
 </Base>

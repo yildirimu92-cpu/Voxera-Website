@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Platzhalter from '../components/Platzhalter.astro';
-import { BRANCHEN } from '../config/site';
+import { BRANCHEN_SICHTBAR } from '../config/site';
 import { PLAENE } from '../config/preise';
 
 const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
@@ -31,14 +31,23 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
   <section class="sektion sektion--zurueckgesetzt">
     <div class="wrap">
       <h2>Warum Schweizer KMU Aufträge verlieren</h2>
-      <Platzhalter
-        was="Die drei Vergleichszahlen (62 % / 3.4 h / CHF 4'500) und die Anrufbeantworter-Zahl (72 %)"
-        befund="C4"
-        wartetAuf="zitierfähige Quellen mit Jahr und Erhebungsbasis"
-      />
+      {/* Hier standen vier Vergleichszahlen: 62 % / 3.4 h / CHF 4'500 und
+          72 % zum Anrufbeantworter (Befund C4). Sie sind gestrichen, nicht
+          vertagt. Der Content-Audit haelt fest, dass fuer keine der Zahlen
+          eine Quelle dokumentiert ist -- weder auf der Seite noch im
+          Fahrplan noch im Repo. Unbelegte quantitative Vergleichsangaben
+          sind nach UWG angreifbar.
+
+          Kommt eine zitierfaehige Quelle mit Jahr und Erhebungsbasis dazu,
+          gehoert die Zahl samt Fussnote zurueck an diese Stelle. */}
+      <p>
+        Ein verpasster Anruf ist selten nur ein verpasster Anruf. Wer nicht
+        durchkommt, ruft beim Nächsten an – und meldet sich kein zweites Mal.
+      </p>
       <p class="leise hinweis">
-        Bis die Quellen vorliegen, steht hier keine Zahl. Eine unbelegte Vergleichsangabe ist
-        nach UWG angreifbar – und ein Interessent, der nachfragt, bekommt heute keine Antwort.
+        Wie oft das passiert, hängt vom Betrieb ab. Voxera setzt dort an, wo
+        niemand abnehmen kann: ausserhalb der Bürozeiten, während der Arbeit
+        am Kunden, wenn die Leitung besetzt ist.
       </p>
     </div>
   </section>
@@ -51,7 +60,7 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
         die Sie sonst selbst stellen würden.
       </p>
       <ul role="list" class="branchen">
-        {BRANCHEN.map((b) => (
+        {BRANCHEN_SICHTBAR.map((b) => (
           <li>
             <a class="karte" href={`/branchen/${b.slug}/`}>
               <h3>{b.titel}</h3>

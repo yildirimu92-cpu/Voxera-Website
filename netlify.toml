@@ -26,16 +26,33 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# --- Rechtstexte ------------------------------------------------------------
-# Hier standen 301-Weiterleitungen von /agb.html, /datenschutz.html und
-# /impressum.html auf die kurze Form. Sie sind entfernt: die Zielseiten gibt es
-# in diesem Geruest noch nicht, die Regeln haetten funktionierende Adressen
-# also dauerhaft auf 404 gelenkt — und zwar mit 301, den Browser und
-# Suchmaschinen cachen.
+# --- Rechtstexte: kurze Form ist kanonisch ---------------------------------
+# Sie steht im generierten Vertragstext und in der Dokumentenliste des
+# Kunden-Dashboards. Die alten .html-Varianten waren per 200-Rewrite parallel
+# erreichbar und haben Duplicate Content erzeugt — daher 301.
 #
-# Ohne Regel liefert Netlify die .html-Adressen weiterhin regulaer aus, sobald
-# die Dateien da sind. Die Weiterleitungen kommen zurueck, wenn die kurzen
-# Formen als Astro-Seiten existieren — dann sind sie korrekt.
+# Diese drei Regeln waren zwischenzeitlich entfernt, weil die Zielseiten
+# fehlten und ein 301 auf eine 404 dauerhaft im Cache landet. Mit
+# src/pages/{agb,datenschutz,impressum}.astro existieren sie jetzt, damit sind
+# die Regeln wieder korrekt. Wer eine der drei Seiten loescht, muss auch die
+# zugehoerige Regel entfernen.
+[[redirects]]
+  from = "/agb.html"
+  to = "/agb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/datenschutz.html"
+  to = "/datenschutz"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/impressum.html"
+  to = "/impressum"
+  status = 301
+  force = true
 
 # --- Transaktionsseiten -----------------------------------------------------
 # Kein Marketing. Muessen den Relaunch funktionsfaehig ueberleben: das

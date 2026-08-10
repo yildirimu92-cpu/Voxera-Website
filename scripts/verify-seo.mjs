@@ -40,7 +40,32 @@ async function htmlDateien(dir) {
 const einmal = (s, re) => (s.match(re) || []).length;
 const inhalt = (s, re) => (s.match(re)?.[1] ?? '').trim();
 
-const dateien = await htmlDateien(DIST);
+// Wortwoertlich aus voxera-website-live uebernommene Seiten. Sie liegen in
+// public/ und sind der Vertragsweg: Kunden-Dashboard und Offertenversand
+// deeplinken mit Token hierher, und ihr ausgelieferter Text ist der, dem
+// Kunden zugestimmt haben.
+//
+// Sie werden hier NICHT nach Marketing-SEO beurteilt. Description, Canonical
+// und Bildmasse nachzuruesten hiesse, den Auslieferungsstand zu aendern --
+// und der muss byte-identisch bleiben. Aus der Suche sind sie ohnehin
+// genommen: netlify.toml setzt X-Robots-Tag noindex, und der Sitemap-Filter
+// in astro.config.mjs schliesst sie aus.
+//
+// Statt sie nur zu ueberspringen, wird ihr VORHANDENSEIN geprueft. Genau das
+// war das Risiko, das netlify.toml als TODO festhielt: fehlen sie im Build,
+// brechen unterzeichnete Vertragslinks -- und ohne Pruefung faellt es erst
+// dem Kunden auf.
+const WORTWOERTLICH = ['offer-accept.html', 'contract-signed.html'];
+
+const alleDateien = await htmlDateien(DIST);
+const dateien = alleDateien.filter((d) => !WORTWOERTLICH.includes(relative(DIST, d)));
+
+for (const name of WORTWOERTLICH) {
+  if (!alleDateien.some((d) => relative(DIST, d) === name)) {
+    fehler.push(`${name} fehlt im Build — die Vertragslinks aus Kunden-Dashboard und Offertenversand laufen ins Leere`);
+  }
+}
+
 if (dateien.length === 0) fehler.push('Keine HTML-Dateien in dist/ gefunden.');
 
 const titelGesehen = new Map();
@@ -213,4 +238,5 @@ if (offeneStellen.length) {
 }
 
 console.log(`\n${dateien.length} Seiten geprueft — ${fehler.length} Fehler, ${warnungen.length} Warnungen, ${offeneStellen.length} Seiten mit Platzhaltern, ${new Set(fehlendeAssets).size} fehlende Assets.`);
+console.log(`${WORTWOERTLICH.length} wortwoertlich uebernommene Seiten vorhanden, von der SEO-Pruefung ausgenommen: ${WORTWOERTLICH.join(', ')}`);
 if (fehler.length) process.exit(1);

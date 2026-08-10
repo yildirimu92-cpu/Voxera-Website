@@ -1,0 +1,142 @@
+---
+/**
+ * Layout der Rechtstexte (AGB, Datenschutz, Impressum).
+ *
+ * Warum ein eigenes Layout: Die drei Seiten teilen eine Struktur, die im
+ * Marketingteil nicht vorkommt — durchnummerierte Abschnitte, Definitions-
+ * tabellen, hervorgehobene Adressblöcke. Ohne gemeinsame Grundlage driften
+ * sie auseinander, und genau das ist auf der alten Seite passiert: drei
+ * Dateien mit dreimal leicht anderem CSS.
+ *
+ * Die Gestaltungsregeln aus tokens.css gelten hier unverändert. Der alte
+ * dunkle Rechtstext-Hero mit goldener Rubrik ist deshalb NICHT übernommen:
+ * Gold trägt nie Text. Die Rubrik läuft in Sekundärfarbe, das Gold liegt in
+ * der Akzentlinie darüber.
+ */
+import Base from './Base.astro';
+
+interface Props {
+  titel: string;
+  beschreibung: string;
+  /** Sichtbare H1. Getrennt vom Meta-Titel, der kürzer sein muss. */
+  ueberschrift: string;
+  /** Versions- und Standzeile unter der Überschrift. */
+  stand: string;
+}
+
+const { titel, beschreibung, ueberschrift, stand } = Astro.props;
+---
+<Base titel={titel} beschreibung={beschreibung}>
+  <section class="kopf">
+    <div class="wrap">
+      <hr class="akzentlinie" />
+      <p class="rubrik">Rechtliches</p>
+      <h1>{ueberschrift}</h1>
+      <p class="leise stand">{stand}</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="recht">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<style>
+  .kopf {
+    padding-block: var(--vx-section-y) 0;
+  }
+  .rubrik {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--vx-text-muted);
+    margin-bottom: 10px;
+  }
+  .stand {
+    margin-top: 14px;
+    font-size: var(--vx-text-sm);
+  }
+</style>
+
+{/* Der Inhalt kommt aus der jeweiligen Seite und traegt deren Scope, nicht
+    den dieses Layouts — deshalb global, eingegrenzt auf .recht. */}
+<style is:global>
+  .recht {
+    max-width: 820px;
+    padding-block: 48px var(--vx-section-y);
+  }
+
+  .recht .sek { margin-bottom: 44px; }
+
+  /* Abschnittsmarke: die Nummerierung der Rechtstexte. Sekundaerfarbe,
+     nicht Gold — Gold traegt nie Text. */
+  .recht .sek-num {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--vx-text-muted);
+    margin-bottom: 8px;
+  }
+
+  .recht h2 {
+    font-size: var(--vx-text-h3);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--vx-hairline);
+    margin-bottom: 14px;
+  }
+  .recht h3 {
+    font-size: var(--vx-text-lg);
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+
+  .recht p { margin-bottom: 12px; }
+  .recht p:last-child { margin-bottom: 0; }
+
+  .recht ul {
+    margin: 0 0 14px;
+    padding-left: 22px;
+    max-width: var(--vx-measure);
+  }
+  .recht li { margin-bottom: 8px; }
+
+  /* Adress- und Hinweisblöcke. Nutzt .karte aus base.css, ergaenzt nur den
+     Abstand — eine zweite Kartenart waere eine zweite Schattenstufe. */
+  .recht .karte { margin-bottom: 20px; }
+  .recht .karte p:last-child { margin-bottom: 0; }
+
+  /* Definitionstabellen (Datenkategorien, Speicherfristen, Betroffenenrechte).
+     Auf schmalen Schirmen horizontal scrollbar statt gequetscht: eine
+     Speicherfrist, die man nicht lesen kann, ist keine Information. */
+  .recht .tabelle-rahmen {
+    overflow-x: auto;
+    margin-bottom: 16px;
+    border: 1px solid var(--vx-hairline);
+    border-radius: var(--vx-radius);
+  }
+  .recht table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    font-size: var(--vx-text-sm);
+  }
+  .recht th,
+  .recht td {
+    text-align: left;
+    vertical-align: top;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--vx-hairline);
+  }
+  .recht tr:last-child td { border-bottom: 0; }
+  .recht th {
+    background: var(--vx-recessed);
+    font-weight: 700;
+    color: var(--vx-text);
+  }
+  .recht td { color: var(--vx-text-muted); }
+  .recht td strong { color: var(--vx-text); }
+</style>

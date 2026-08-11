@@ -15,9 +15,9 @@ keine Optimierung, keine Massangaben im HTML, und damit Layoutsprünge beim Lade
 |---|---|
 | **Pfad** | `src/assets/umut-yildirim.jpg` |
 | **Format** | JPEG oder PNG — unkomprimiert ist in Ordnung, die Pipeline übernimmt das |
-| **Ausrichtung** | Hochformat |
-| **Grösse** | mindestens 800 px auf der kurzen Kante, gerne mehr |
-| **Seitenverhältnis** | 3:4 oder 4:5 |
+| **Ausrichtung** | quadratisch |
+| **Grösse** | mindestens 800 × 800 px, gerne mehr |
+| **Seitenverhältnis** | **1:1** — vom Betreiber entschieden, passend zum gelieferten Anschnitt |
 
 Kein WebP und kein AVIF anliefern — die erzeugt der Build selbst, und aus einem
 bereits komprimierten Bild wird dabei ein schlechteres.
@@ -34,8 +34,12 @@ mit derselben Änderung:
 import { Image } from 'astro:assets';
 import portrait from '../../assets/umut-yildirim.jpg';
 
-<Image src={portrait} alt="Umut Yildirim, Gründer von Voxera" width={480} loading="lazy" />
+<Image src={portrait} alt="Umut Yildirim, Gründer von Voxera" width={480} height={480} loading="lazy" />
 ```
 
 `alt` beschreibt die Person, nicht das Bild — Bildschirmleser sagen „Grafik"
 bereits selbst an.
+
+`width` und `height` sind gleich, weil das Bild quadratisch ist. Weicht das
+gelieferte Seitenverhältnis davon ab, gibt es Beschnitt oder Verzerrung — und
+das fällt erst im Browser auf, nicht im Build.

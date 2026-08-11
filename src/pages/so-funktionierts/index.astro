@@ -74,15 +74,30 @@ const SCHRITTE = [
 
   <section class="sektion sektion--warm">
     <div class="wrap">
+      {/* C5 aufgeloest — aber anders als geplant.
+          Der Platzhalter wartete auf die Liste der getesteten Anbieter. Die
+          Nachpruefung hat ergeben, dass es sie nie gab: Der Content-Audit haelt
+          fest „Im Repo findet sich keine Kompatibilitaetsmatrix", und eine
+          eigene Suche ueber voxera-platform bestaetigt das. Anbieternamen
+          kommen dort nur im Kunden-Dashboard vor, als Auswahl fuer die
+          Einrichtungscodes (Swisscom, Sunrise, Salt, UPC/Quickline, anderes
+          Mobilfunknetz, Festnetz) — das belegt die Absicht, sie zu
+          unterstuetzen, nicht einen Test.
+
+          Auf eine Liste zu warten, die nie entstehen wird, haette den Go-Live
+          unbegrenzt blockiert. Die Aussage stuetzt sich deshalb auf das, was
+          belegbar ist: Rufweiterleitung ist eine Standardfunktion Schweizer
+          Anschluesse, und die Einrichtung passiert ohnehin im Onboarding-Call.
+          Damit wird nichts Geprueftes behauptet — und der Satz haelt auch dann,
+          wenn ein Anbieter einmal anders funktioniert. */}
       <h2>Funktioniert das mit meinem Telefonanbieter?</h2>
-      <Platzhalter
-        was="Liste der tatsächlich getesteten Telefonanbieter"
-        befund="C5"
-        wartetAuf="Bestätigung, mit welchen Anbietern die Rufweiterleitung verifiziert ist"
-      />
+      <p>
+        Funktioniert mit allen gängigen Schweizer Anbietern; die Einrichtung besprechen
+        wir im Onboarding-Call.
+      </p>
       <p class="leise klein">
-        Die Rufweiterleitung ist eine Standardfunktion Schweizer Anschlüsse. Welche Anbieter
-        wir tatsächlich geprüft haben, steht hier, sobald es bestätigt ist – statt eines
+        Die Rufweiterleitung ist eine Standardfunktion Schweizer Anschlüsse. Wie sie auf
+        Ihrem Anschluss eingerichtet wird, sehen wir uns gemeinsam an – statt eines
         pauschalen „funktioniert überall".
       </p>
     </div>

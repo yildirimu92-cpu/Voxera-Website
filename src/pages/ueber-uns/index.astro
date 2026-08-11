@@ -44,7 +44,13 @@ import { SITE } from '../../config/site';
         </p>
       </div>
 
-      <Platzhalter was="Foto des Gründers" wartetAuf="Bilddatei" />
+      {/* Sobald die Datei da ist: src/assets/README.md nennt Pfad, Format und
+          den Dreizeiler zum Einbinden. Der Platzhalter faellt mit derselben
+          Aenderung weg. */}
+      <Platzhalter
+        was="Foto des Gründers"
+        wartetAuf="Bilddatei nach src/assets/umut-yildirim.jpg (Hochformat, ab 800 px kurze Kante)"
+      />
 
       <p class="ort leise klein">
         {SITE.ort} · <a href={`mailto:${SITE.mail}`}>{SITE.mail}</a>

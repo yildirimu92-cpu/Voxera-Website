@@ -370,9 +370,22 @@
     document.getElementById('voxera-sig-date').textContent = fmt(contract.countersigned_at);
 
     // Rechtliche Dokumente
-    const agbV = offer?.agb_version || 'v2.0';
-    const avvV = offer?.avv_version || 'v1.0';
-    const dseV = offer?.dse_version || 'v2.0';
+    //
+    // Kein stiller Fallback auf eine Altversion. Fehlt die Angabe in der
+    // Offerte, wird das sichtbar gemacht statt durch eine willkuerliche Zahl
+    // ersetzt: offer-public-accept.js schreibt `|| null`, der Fall tritt real
+    // ein, und eine falsche Versionsangabe auf einem unterzeichneten Vertrag
+    // ist schlechter als eine fehlende.
+    //
+    // Gespeichert wird die datierte Form (z. B. `v2.0-2026-05-01`). Frueher
+    // stand hier die undatierte Kurzform als Fallback, wodurch dieselbe Zeile
+    // je nach Datenlage in zwei Formaten erschien.
+    // Kursiv statt eingefaerbt: `#doc-legal` definiert keine CSS-Variablen und
+    // setzt seine Farbe inline, ein Variablenverweis liefe hier ins Leere.
+    const fehlt = '<em>nicht erfasst</em>';
+    const agbV = offer?.agb_version || fehlt;
+    const avvV = offer?.avv_version || fehlt;
+    const dseV = offer?.dse_version || fehlt;
     document.getElementById('doc-legal').innerHTML =
       `AGB ${agbV} · AVV ${avvV} · Datenschutzerklärung ${dseV}<br>Akzeptiert am ${custDate ? fmt(custDate) : '—'} durch ${custName}`;
 

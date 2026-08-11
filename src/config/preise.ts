@@ -32,6 +32,15 @@ export type Plan = {
    * alten Seite Merkmale in Plaene geraten, die es nicht gibt (C7).
    */
   fuerWen: string;
+  /**
+   * Was dieser Plan NICHT kann — ausdruecklich, in einem Satz.
+   *
+   * Ohne die Merkmalsmatrix erfuehre ein Starter-Interessent sonst nie, was ihm
+   * fehlt: Die Grenze stuende nur implizit im fuerWen-Satz des naechsten Plans,
+   * und den liest, wer sich fuer den guenstigsten entschieden hat, nicht mehr.
+   * Nur setzen, wo es eine harte funktionale Grenze gibt.
+   */
+  grenze?: string;
 };
 
 /**
@@ -43,9 +52,8 @@ export type Plan = {
  * der alten Seite entstanden sind.
  *
  * Die einzige harte Unterscheidung darin war „Rueckruf-Management" (nicht in
- * Starter). Sie steht jetzt im `fuerWen`-Satz des Business-Plans. Soll sie
- * ausdruecklich als Grenze des Starter-Plans erscheinen, gehoert sie dorthin
- * formuliert — nicht in eine wiederauferstehende Tabelle.
+ * Starter). Sie steht jetzt als `grenze` auf der Starter-Karte — ausdruecklich
+ * und dort, wo sie gelesen wird, statt implizit im Satz des naechsten Plans.
  */
 
 export const PLAENE: Plan[] = [
@@ -59,6 +67,9 @@ export const PLAENE: Plan[] = [
     fuerWen:
       'Für Einzelbetriebe, bei denen das Telefon eher selten klingelt, ' +
       'ein verpasster Anruf aber trotzdem ein verlorener Auftrag ist.',
+    grenze:
+      'Ohne Rückruf-Management: Sie sehen jede Anfrage im Dashboard, aber Voxera ' +
+      'führt keine Rückrufliste mit Status. Das gibt es ab Business.',
   },
   {
     id: 'business',
@@ -103,45 +114,21 @@ export const AKTION: {
 } | null = null;
 
 /**
- * Vergleich gegen nutzungsbasierte Anbieter.
+ * Vergleich gegen nutzungsbasierte Anbieter — DERZEIT NICHT AUF DER SEITE.
  *
- * Das Argument fuer den Festpreis: Bei nutzungsbasierter Abrechnung steigt die
- * Rechnung genau dann, wenn das Geschaeft laeuft — planbar ist das nicht.
+ * Das Argument fuer den Festpreis steht auf /preise/ ohne Zahl: Bei
+ * nutzungsbasierter Abrechnung steigt die Rechnung genau dann, wenn das
+ * Geschaeft laeuft.
  *
- * ACHTUNG, und das ist kein Formalismus: Eine quantitative Vergleichsangabe
- * ohne offengelegte Grundlage ist nach UWG angreifbar. Genau deshalb sind die
- * vier Vergleichszahlen (62 % / 3.4 h / CHF 4'500 / 72 %) von der Startseite
- * gestrichen worden — nicht vertagt, gestrichen, weil fuer keine eine Quelle
- * dokumentiert war.
+ * Die Zahl (rund CHF 245 im Monat bei 50 Anrufen pro Woche) stammt aus einer
+ * Beispielrechnung des Wettbewerbers selbst und ist damit zitierfaehig — sie
+ * muss aber vor der Veroeffentlichung gegen dessen aktuelle Preisseite geprueft
+ * werden. Bis dahin steht sie NICHT hier als Platzhalter, der auf etwas wartet,
+ * sondern als eigener Punkt im Fahrplan. Ein Platzhalter haette die Seite
+ * blockiert, obwohl der Abschnitt ohne die Zahl vollstaendig ist.
  *
- * `monatlichChf` ist vom Betreiber entschieden. Die drei Annahmen darunter
- * fehlen noch. Solange sie fehlen, zeigt /preise/ die Zahl NICHT, sondern einen
- * Platzhalter: Ein Betrag ohne Rechenweg waere dieselbe Angreifbarkeit an
- * neuer Stelle.
- *
- * Zum Ausfuellen genuegen drei Werte; der Rechenweg steht dann auf der Seite
- * und ist nachrechenbar:
- *   anrufeProWoche * minutenProAnruf * chfProMinute * (52 / 12)
+ * Siehe Issue im Repo: "Vergleichszahl gegen nutzungsbasierte Anbieter".
  */
-export const VERGLEICH: {
-  monatlichChf: number;
-  anrufeProWoche: number;
-  minutenProAnruf: number | null;
-  chfProMinute: number | null;
-  quelle: string | null;
-} = {
-  monatlichChf: 245,
-  anrufeProWoche: 50,
-  minutenProAnruf: null,
-  chfProMinute: null,
-  quelle: null,
-};
-
-/** Ist der Vergleich belegt genug, um ihn zu zeigen? */
-export const VERGLEICH_BELEGT =
-  VERGLEICH.minutenProAnruf !== null &&
-  VERGLEICH.chfProMinute !== null &&
-  VERGLEICH.quelle !== null;
 
 export const KONDITIONEN = [
   'Alle Preise in CHF, exkl. MwSt.',

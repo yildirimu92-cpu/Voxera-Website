@@ -1,23 +1,62 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
+import { SITE } from '../../config/site';
+
+/**
+ * Gründerprofil. Text vom Betreiber, wortgleich übernommen.
+ *
+ * BEWUSST NICHT ERWÄHNT: der Arbeitgeber des Gründers — an keiner Stelle, auch
+ * nicht andeutungsweise. Ausdrückliche Vorgabe.
+ *
+ * Diese Seite trägt einen Teil des Vertrauens, das sonst Kundenstimmen tragen
+ * würden. Da es keine freigegebenen Referenzen gibt (C16), zählt hier
+ * Transparenz — und die einzige belegbare Aussage über die Grösse des Betriebs
+ * ist die, dass es ein Einzelbetrieb ist. Sie steht deshalb offen da, statt
+ * hinter einem „wir" zu verschwinden.
+ */
 ---
 <Base
   titel="Über Voxera | KI-Telefonassistent aus der Schweiz"
-  beschreibung="Wer hinter Voxera steht, wo wir sitzen und warum ein Schweizer KMU seinen Telefonempfang automatisieren sollte."
+  beschreibung="Wer hinter Voxera steht: Umut Yildirim, Einzelbetrieb im Kanton Luzern. Ein Ansprechpartner statt Ticketschalter."
 >
   <section class="sektion">
     <div class="wrap">
       <hr class="akzentlinie" />
-      <h1>Über Voxera</h1>
-      <Platzhalter
-        was="Gründerprofil und Standortabschnitt"
-        wartetAuf="Text und Bild"
-      />
-      <p class="leise" style="margin-top:20px;font-size:var(--vx-text-sm);">
-        Diese Seite trägt einen Teil des Vertrauens, das sonst Kundenstimmen tragen würden –
-        solange es keine freigegebenen Referenzen gibt, zählt hier Transparenz.
+      <h1>Wer hinter Voxera steht</h1>
+
+      <div class="profil">
+        <p class="gross">
+          Ich bin Umut Yildirim. Seit neun Jahren verkaufe ich an Schweizer KMU — und in
+          dieser Zeit habe ich gelernt, dass die meisten Probleme keine grossen sind. Es sind
+          die kleinen, die niemand angeht, weil alle zu beschäftigt sind.
+        </p>
+        <p>Ein verpasster Anruf ist so ein Problem.</p>
+        <p>
+          Voxera habe ich gebaut, weil es heute möglich ist. Was vor zwei Jahren ein
+          Rechenzentrum gebraucht hätte, läuft jetzt für den Preis eines Mittagessens pro Tag.
+          Diese Möglichkeit nicht zu nutzen, wäre die eigentliche Verschwendung.
+        </p>
+        <p>
+          Hinter Voxera steht kein Team und kein Callcenter. Nur ich. Das heisst: Sie haben
+          einen Ansprechpartner, keinen Ticketschalter. Ich führe Ihren Onboarding-Call, ich
+          richte Ihren Assistenten ein, und wenn etwas nicht stimmt, schreiben Sie mir.
+        </p>
+      </div>
+
+      <Platzhalter was="Foto des Gründers" wartetAuf="Bilddatei" />
+
+      <p class="ort leise klein">
+        {SITE.ort} · <a href={`mailto:${SITE.mail}`}>{SITE.mail}</a>
       </p>
     </div>
   </section>
 </Base>
+
+<style>
+  .profil { max-width: var(--vx-measure); margin-top: var(--vx-gap-head-body); }
+  .profil p + p { margin-top: 16px; }
+  .gross { font-size: var(--vx-text-lg); }
+  .ort { margin-top: 24px; }
+  .klein { font-size: 13px; }
+</style>

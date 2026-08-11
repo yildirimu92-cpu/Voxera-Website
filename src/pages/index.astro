@@ -35,24 +35,45 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
 
   <section class="sektion sektion--zurueckgesetzt">
     <div class="wrap">
-      <h2>Warum Schweizer KMU Aufträge verlieren</h2>
       {/* Hier standen vier Vergleichszahlen: 62 % / 3.4 h / CHF 4'500 und
           72 % zum Anrufbeantworter (Befund C4). Sie sind gestrichen, nicht
-          vertagt. Der Content-Audit haelt fest, dass fuer keine der Zahlen
-          eine Quelle dokumentiert ist -- weder auf der Seite noch im
-          Fahrplan noch im Repo. Unbelegte quantitative Vergleichsangaben
-          sind nach UWG angreifbar.
+          vertagt -- fuer keine war eine Quelle dokumentiert.
 
-          Kommt eine zitierfaehige Quelle mit Jahr und Erhebungsbasis dazu,
-          gehoert die Zahl samt Fussnote zurueck an diese Stelle. */}
-      <p>
-        Ein verpasster Anruf ist selten nur ein verpasster Anruf. Wer nicht
-        durchkommt, ruft beim Nächsten an – und meldet sich kein zweites Mal.
-      </p>
+          An ihrer Stelle steht jetzt eine Begebenheit des Gruenders. Der
+          Unterschied ist nicht Stilistik: Eine Statistik ueber fremde Betriebe
+          braucht einen Beleg, ein eigenes Erlebnis nicht. Die CHF 5'000 sind
+          deshalb keine Kennzahl, sondern ein Betrag aus einem einzelnen Fall,
+          und der Text sagt das auch.
+
+          Das „vielleicht" im vorletzten Absatz bleibt stehen. Ohne dieses Wort
+          verspricht der Text, dass Voxera Auftraege rettet; mit ihm verspricht
+          er die Chance, es zu versuchen. */}
+      <h2>Ein Kunde wollte mich weiterempfehlen. Ich habe es einen Tag zu spät erfahren.</h2>
+      <div class="geschichte">
+        <p>
+          Ein bestehender Kunde rief an. Ein Kollege von ihm brauchte eine Website — er wollte
+          ihm meinen Namen geben. Ich war unterwegs, beim nächsten Kunden. Ich habe mich am
+          folgenden Tag gemeldet. Da war der Auftrag schon vergeben. CHF 5'000.
+        </p>
+        <p>
+          Ich war nicht nachlässig. Ich war am Arbeiten. Genau deshalb konnte ich nicht ans
+          Telefon — und genau deshalb habe ich nicht einmal gewusst, dass ich gerade etwas
+          verpasse.
+        </p>
+        <p>
+          Das ist der Teil, der wirklich weh tut: Ein verpasster Anruf hinterlässt nichts.
+          Keine Nummer, kein Anliegen, keinen Hinweis auf Dringlichkeit. Es ist ein Auftrag,
+          von dem Sie nie erfahren, dass es ihn gab.
+        </p>
+        <p>
+          Hätte ich am Abend gewusst, dass jemand angerufen hat, worum es geht und dass es
+          eilt — ich hätte noch am selben Abend zurückgerufen. Vielleicht wäre der Auftrag
+          dann noch frei gewesen.
+        </p>
+      </div>
       <p class="leise hinweis">
-        Wie oft das passiert, hängt vom Betrieb ab. Voxera setzt dort an, wo
-        niemand abnehmen kann: ausserhalb der Bürozeiten, während der Arbeit
-        am Kunden, wenn die Leitung besetzt ist.
+        Voxera setzt dort an, wo niemand abnehmen kann: ausserhalb der Bürozeiten,
+        während der Arbeit am Kunden, wenn die Leitung besetzt ist.
       </p>
     </div>
   </section>
@@ -124,6 +145,8 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
   .gross { font-size: var(--vx-text-lg); }
   .residenz { margin-top: 20px; }
   .klein { font-size: 13px; }
+  .geschichte { max-width: var(--vx-measure); margin-top: var(--vx-gap-head-body); }
+  .geschichte p + p { margin-top: 16px; }
   .aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .hinweis { margin-top: 16px; font-size: var(--vx-text-sm); }
   .branchen {

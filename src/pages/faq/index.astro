@@ -13,29 +13,45 @@ import { KONDITIONEN } from '../../config/preise';
  *    nicht neu formuliert (C2). Dort steht bereits die zutreffende Fassung.
  *  - „72 % sprechen keine Nachricht auf einen Anrufbeantworter" ist raus —
  *    die Zahl hat keine Quelle (C4). Das Argument trägt auch ohne sie.
- *  - Die alte Antwort „Die meisten Anrufer merken keinen Unterschied" ist
- *    GESPERRT, nicht ersetzt. Sie widerspricht der Datenschutzerklärung, die
- *    in §11 eine Ansage zu Beginn jedes Gesprächs zusichert (EU AI Act
- *    Art. 50) — aber ob diese Ansage tatsächlich ausgeliefert wird, ist
- *    unbestätigt (C25); in den Prompt-Vorlagen liess sie sich nicht finden,
- *    und im Fahrplan steht der Anrufer-Hinweis als offener Launch-Blocker.
+ *  - Die alte Antwort „Die meisten Anrufer merken keinen Unterschied" war
+ *    GESPERRT, nicht ersetzt (C25): Sie widersprach der Datenschutzerklärung,
+ *    und ob die zugesicherte Ansage tatsächlich ausgeliefert wird, war
+ *    unbestätigt. Eine umgedrehte Antwort wäre genauso ungedeckt gewesen — nur
+ *    in die andere Richtung.
  *
- *    Eine umgedrehte Antwort („Ja, wir sagen es") wäre damit genauso
- *    ungedeckt wie die alte — nur in die andere Richtung. Bis zur Klärung
- *    steht hier deshalb ein Platzhalter statt einer Formulierung.
+ *    SEIT 10.08.2026 BEANTWORTET. Der Testanruf hat die Ansage belegt
+ *    (protokolliert im Merge-Commit a53d082 von voxera-website-live); der
+ *    Assistent spricht sie, seit voxera-platform #919 und #921 gemergt und die
+ *    Agenten synchronisiert sind. Die Antwort beschreibt deshalb Verhalten und
+ *    behauptet keine Rechtskonformität — dieselbe Linie wie §11 in v2.2.
  *
- * Gesperrte Fragen werden ausserdem NICHT ins FAQPage-Schema aufgenommen.
- * Ein Platzhalter, der als acceptedAnswer in den Suchergebnissen landet, wäre
- * schlimmer als gar kein Schema.
+ * DIE SPERR-MECHANIK BLEIBT, obwohl derzeit keine Frage gesperrt ist. Sie ist
+ * kein Überbleibsel, sondern der Grund, aus dem C25 nie als Behauptung online
+ * ging: Gesperrte Fragen werden NICHT ins FAQPage-Schema aufgenommen. Ein
+ * Platzhalter, der als acceptedAnswer in den Suchergebnissen landet, wäre
+ * schlimmer als gar kein Schema. Die nächste unbelegte Frage braucht sie
+ * wieder — dann steht sie bereit, statt neu erfunden zu werden.
  */
 const FRAGEN = [
   {
     frage: 'Merken meine Kunden, dass eine KI drangeht?',
-    gesperrt: {
-      befund: 'C25',
-      wartetAuf:
-        'Bestätigung, dass der Hinweis zu Beginn des Gesprächs tatsächlich ausgeliefert wird (Datenschutzerklärung §11, EU AI Act Art. 50)',
-    },
+    // C25 entsperrt. Die Bedingung war: Bestaetigung, dass der Hinweis zu
+    // Beginn des Gespraechs tatsaechlich ausgeliefert wird. Sie liegt seit dem
+    // Testanruf vom 10.08.2026 vor, protokolliert im Merge-Commit a53d082 von
+    // voxera-website-live: der Assistent spricht ihn, seit voxera-platform #919
+    // und #921 gemergt und die Agenten synchronisiert sind.
+    //
+    // Die Antwort beschreibt VERHALTEN und behauptet keine Rechtskonformitaet —
+    // dieselbe Linie wie Paragraf 11 der Datenschutzerklaerung in v2.2, wo die
+    // rechtliche Einordnung ausdruecklich als vorlaeufig gekennzeichnet ist.
+    // Eine Antwort „wir erfuellen Art. 50 EU AI Act" waere wieder eine Zusage
+    // ueber etwas, das nicht geprueft ist.
+    antwort:
+      'Ja. Zu Beginn jedes Gesprächs sagt der Assistent, dass er eine digitale Assistentin ' +
+      'ist und dass das Gespräch aufgezeichnet wird. Der Hinweis ist Teil der Begrüssung und ' +
+      'lässt sich nicht abschalten — auch dann nicht, wenn Sie eine eigene Begrüssung ' +
+      'hinterlegen.',
+    link: { href: '/datenschutz', text: 'Datenschutzerklärung, Abschnitt 11' },
   },
   {
     frage: 'Funktioniert Voxera mit meiner bestehenden Nummer?',

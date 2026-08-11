@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
-import { PLAENE, AKTION, KONDITIONEN, GEPLANT, VERGLEICH, VERGLEICH_BELEGT } from '../../config/preise';
+import { PLAENE, AKTION, KONDITIONEN, GEPLANT } from '../../config/preise';
 import { SITE } from '../../config/site';
 
 // Offer-Schema aus derselben Quelle wie die Tabelle. priceValidUntil wird nur
@@ -57,6 +57,7 @@ const schema = {
             <h2>{p.name}</h2>
             <p class="preis">CHF {p.monatlichChf}<span class="leise klein"> / Monat</span></p>
             <p class="fuerwen">{p.fuerWen}</p>
+            {p.grenze && <p class="grenze leise klein">{p.grenze}</p>}
             <dl class="zahlen leise klein">
               <div><dt>Inklusivminuten</dt><dd>{p.inklusivMinuten}</dd></div>
               <div><dt>Zusatzminute</dt><dd>CHF {p.zusatzminuteChf.toFixed(2)}</dd></div>
@@ -75,20 +76,12 @@ const schema = {
         Geschäft läuft. Ein Festpreis kostet in ruhigen Monaten etwas mehr und in
         guten deutlich weniger – vor allem aber steht er vorher fest.
       </p>
-      {VERGLEICH_BELEGT ? (
-        <p>
-          Bei {VERGLEICH.anrufeProWoche} Anrufen pro Woche
-          à {VERGLEICH.minutenProAnruf} Minuten und CHF {VERGLEICH.chfProMinute} pro Minute
-          ergeben sich rund <strong>CHF {VERGLEICH.monatlichChf} im Monat</strong>.
-          <span class="leise klein"> Grundlage: {VERGLEICH.quelle}</span>
-        </p>
-      ) : (
-        <Platzhalter
-          was={`Rechenweg zur Vergleichszahl von CHF ${VERGLEICH.monatlichChf} bei ${VERGLEICH.anrufeProWoche} Anrufen pro Woche`}
-          befund="C4"
-          wartetAuf="Minuten pro Anruf, Preis pro Minute und die Quelle des Tarifs"
-        />
-      )}
+      {/* Bewusst ohne Vergleichszahl. Die Rechnung des Wettbewerbers ist
+          zitierfaehig, aber noch nicht gegen dessen aktuelle Preisseite
+          geprueft; sie steht als eigener Punkt im Fahrplan und nicht als
+          Platzhalter, der diese Seite blockiert. Der Abschnitt traegt auch
+          ohne Zahl — er beschreibt die Bauform der Abrechnung, nicht ihren
+          Betrag. */}
 
       <ul role="list" class="konditionen leise klein">
         {KONDITIONEN.map((k) => <li>{k}</li>)}
@@ -108,6 +101,7 @@ const schema = {
   .preis { font-family: var(--vx-font-display); font-size: 34px; font-weight: 800; letter-spacing: -.03em; margin-top: 8px; }
   .klein { font-size: 13px; }
   .fuerwen { margin-top: 12px; font-size: var(--vx-text-sm); }
+  .grenze { margin-top: 10px; }
   .zahlen { margin-top: 16px; display: grid; gap: 6px; }
   .zahlen > div { display: flex; justify-content: space-between; gap: 12px; }
   .zahlen dt { color: var(--vx-text-muted); }

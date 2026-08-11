@@ -23,7 +23,11 @@ export const NAV = [
   { href: '/branchen/', label: 'Branchen' },
   { href: '/preise/', label: 'Preise' },
   { href: '/ratgeber/', label: 'Ratgeber' },
-  { href: '/demo/', label: 'Demo' },
+  // Beschriftung „Erstgespraech", nicht „Demo": Hinter /demo/ liegt derzeit
+  // die Terminstrecke, keine Vorfuehrung. Der Pfad bleibt, weil die alten
+  // Anker #demo und #beratung dorthin zeigen. Sobald die Demonummer steht,
+  // stimmt „Demo" wieder und die Beschriftung kann zurueck.
+  { href: '/demo/', label: 'Erstgespräch' },
 ];
 
 /** Die acht Branchen. `vorlage` verweist auf die Prompt-Vorlagen im Produkt

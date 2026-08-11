@@ -16,8 +16,9 @@ import { EINRICHTUNG } from '../../config/einrichtung';
  *
  * NICHT übernommen: der Zusatz „Bei allen Anbietern" bei der Rufweiterleitung.
  * Das ist eine Absolutaussage, die genau einmal falsch sein muss, um beim
- * Onboarding zu platzen (Content-Audit C5). Sie steht als Platzhalter, bis die
- * getesteten Anbieter bestätigt sind.
+ * Onboarding zu platzen (Content-Audit C5). Die Nachprüfung hat ergeben, dass
+ * es die erwartete Liste getesteter Anbieter nie gab — Begründung und neue
+ * Fassung stehen beim Abschnitt selbst, weiter unten.
  */
 const SCHRITTE = [
   {
@@ -84,6 +85,12 @@ const SCHRITTE = [
           Mobilfunknetz, Festnetz) — das belegt die Absicht, sie zu
           unterstuetzen, nicht einen Test.
 
+          Die vier namentlich genannten Anbieter sind deshalb bewusst als
+          Aussage ueber das DASHBOARD formuliert ("die Einrichtungscodes liegen
+          bereit") und nicht als Testnachweis ("geprueft mit"). Das ist
+          nachpruefbar — die Codes stehen dort — und behauptet nichts, was
+          niemand belegt hat.
+
           Auf eine Liste zu warten, die nie entstehen wird, haette den Go-Live
           unbegrenzt blockiert. Die Aussage stuetzt sich deshalb auf das, was
           belegbar ist: Rufweiterleitung ist eine Standardfunktion Schweizer
@@ -93,7 +100,8 @@ const SCHRITTE = [
       <h2>Funktioniert das mit meinem Telefonanbieter?</h2>
       <p>
         Funktioniert mit allen gängigen Schweizer Anbietern; die Einrichtung besprechen
-        wir im Onboarding-Call.
+        wir im Onboarding-Call. Für <strong>Swisscom, Sunrise, Salt und UPC/Quickline</strong>
+        liegen die Einrichtungscodes bereit.
       </p>
       <p class="leise klein">
         Die Rufweiterleitung ist eine Standardfunktion Schweizer Anschlüsse. Wie sie auf

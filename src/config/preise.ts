@@ -23,9 +23,30 @@ export type Plan = {
   inklusivMinuten: number;
   zusatzminuteChf: number;
   hervorgehoben?: boolean;
-  enthalten: string[];
-  nichtEnthalten?: string[];
+  /**
+   * EIN Satz: fuer wen dieser Plan gemacht ist.
+   *
+   * Ersetzt die Haekchen-Tabelle. Eine Merkmalsmatrix beantwortet die Frage
+   * „was ist alles drin" — gefragt wird aber „welcher passt zu mir". Zudem
+   * verleitet eine Matrix dazu, Zeilen zu fuellen, und genau so sind auf der
+   * alten Seite Merkmale in Plaene geraten, die es nicht gibt (C7).
+   */
+  fuerWen: string;
 };
+
+/**
+ * ENTFERNT: `enthalten` und `nichtEnthalten`.
+ *
+ * Beide wurden nach dem Wegfall der Merkmalsmatrix nirgends mehr ausgeliefert.
+ * Eine Konfiguration, die das Produkt beschreibt und auf keiner Seite erscheint,
+ * driftet unbemerkt ab — dieselbe Bauform, aus der die ungedeckten Merkmale auf
+ * der alten Seite entstanden sind.
+ *
+ * Die einzige harte Unterscheidung darin war „Rueckruf-Management" (nicht in
+ * Starter). Sie steht jetzt im `fuerWen`-Satz des Business-Plans. Soll sie
+ * ausdruecklich als Grenze des Starter-Plans erscheinen, gehoert sie dorthin
+ * formuliert — nicht in eine wiederauferstehende Tabelle.
+ */
 
 export const PLAENE: Plan[] = [
   {
@@ -35,13 +56,9 @@ export const PLAENE: Plan[] = [
     einrichtungChf: 490,
     inklusivMinuten: 20,
     zusatzminuteChf: 0.75,
-    enthalten: [
-      '24/7 KI-Telefonassistent',
-      'Dashboard-Zugang',
-      'E-Mail-Benachrichtigungen',
-      '1 Schweizer Nummer',
-    ],
-    nichtEnthalten: ['Rückruf-Management'],
+    fuerWen:
+      'Für Einzelbetriebe, bei denen das Telefon eher selten klingelt, ' +
+      'ein verpasster Anruf aber trotzdem ein verlorener Auftrag ist.',
   },
   {
     id: 'business',
@@ -51,12 +68,9 @@ export const PLAENE: Plan[] = [
     inklusivMinuten: 100,
     zusatzminuteChf: 0.7,
     hervorgehoben: true,
-    enthalten: [
-      'Alles aus Starter',
-      'Rückruf-Management',
-      'Priority Support',
-      '1 Schweizer Nummer',
-    ],
+    fuerWen:
+      'Für Betriebe mit laufendem Kundenkontakt, die während der Arbeit ' +
+      'nicht abnehmen können und Rückrufe geordnet abarbeiten wollen.',
   },
   {
     id: 'professional',
@@ -65,12 +79,9 @@ export const PLAENE: Plan[] = [
     einrichtungChf: 990,
     inklusivMinuten: 200,
     zusatzminuteChf: 0.65,
-    enthalten: [
-      'Alles aus Business',
-      'Individuelle Konfiguration',
-      'Priority Support',
-      '1 Schweizer Nummer',
-    ],
+    fuerWen:
+      'Für Betriebe mit hohem Anrufaufkommen, die den Assistenten auf ihre ' +
+      'eigenen Abläufe zuschneiden lassen wollen.',
   },
 ];
 
@@ -90,6 +101,47 @@ export const AKTION: {
   gueltigBis: string;
   einrichtungChf: Record<Plan['id'], number>;
 } | null = null;
+
+/**
+ * Vergleich gegen nutzungsbasierte Anbieter.
+ *
+ * Das Argument fuer den Festpreis: Bei nutzungsbasierter Abrechnung steigt die
+ * Rechnung genau dann, wenn das Geschaeft laeuft — planbar ist das nicht.
+ *
+ * ACHTUNG, und das ist kein Formalismus: Eine quantitative Vergleichsangabe
+ * ohne offengelegte Grundlage ist nach UWG angreifbar. Genau deshalb sind die
+ * vier Vergleichszahlen (62 % / 3.4 h / CHF 4'500 / 72 %) von der Startseite
+ * gestrichen worden — nicht vertagt, gestrichen, weil fuer keine eine Quelle
+ * dokumentiert war.
+ *
+ * `monatlichChf` ist vom Betreiber entschieden. Die drei Annahmen darunter
+ * fehlen noch. Solange sie fehlen, zeigt /preise/ die Zahl NICHT, sondern einen
+ * Platzhalter: Ein Betrag ohne Rechenweg waere dieselbe Angreifbarkeit an
+ * neuer Stelle.
+ *
+ * Zum Ausfuellen genuegen drei Werte; der Rechenweg steht dann auf der Seite
+ * und ist nachrechenbar:
+ *   anrufeProWoche * minutenProAnruf * chfProMinute * (52 / 12)
+ */
+export const VERGLEICH: {
+  monatlichChf: number;
+  anrufeProWoche: number;
+  minutenProAnruf: number | null;
+  chfProMinute: number | null;
+  quelle: string | null;
+} = {
+  monatlichChf: 245,
+  anrufeProWoche: 50,
+  minutenProAnruf: null,
+  chfProMinute: null,
+  quelle: null,
+};
+
+/** Ist der Vergleich belegt genug, um ihn zu zeigen? */
+export const VERGLEICH_BELEGT =
+  VERGLEICH.minutenProAnruf !== null &&
+  VERGLEICH.chfProMinute !== null &&
+  VERGLEICH.quelle !== null;
 
 export const KONDITIONEN = [
   'Alle Preise in CHF, exkl. MwSt.',

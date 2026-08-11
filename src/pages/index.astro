@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import Platzhalter from '../components/Platzhalter.astro';
 import { BRANCHEN_SICHTBAR } from '../config/site';
 import { PLAENE } from '../config/preise';
+import { EINRICHTUNG } from '../config/einrichtung';
+import { DATENRESIDENZ } from '../config/datenresidenz';
 
 const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
 ---
@@ -25,6 +26,10 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
         <a class="knopf" href="/demo/">Demo ansehen</a>
         <a class="knopf knopf--sekundaer" href="/preise/">Preise</a>
       </p>
+      {/* Nennt die Datenbank, nicht „die Daten". Die alte Seite trug hier
+          „ausschliesslich in der Schweiz" — das war nicht knapper, sondern
+          falsch, weil Telefonie und Sprachverarbeitung ausserhalb laufen. */}
+      <p class="residenz leise klein">{DATENRESIDENZ.badge}</p>
     </div>
   </section>
 
@@ -74,13 +79,20 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
   {/* Sand: genau EINE Flaeche pro Seite. Hier ist sie. */}
   <section class="sektion sektion--warm">
     <div class="wrap">
-      <h2>In unter 24 Stunden eingerichtet</h2>
-      <Platzhalter
-        was="Belastbarkeit der 24-Stunden-Zusage"
-        befund="C8"
-        wartetAuf="interne Zusage mit definiertem Support-Prozess"
-      />
-      <p class="aktionen"><a class="knopf" href="/so-funktionierts/">So funktioniert's</a></p>
+      {/* Fuehrt mit dem Gespraech, nicht mit der Dauer. Die Geschwindigkeit ist
+          die Achse, auf der nutzungsbasierte Anbieter antreten; die 24 Stunden
+          stehen deshalb als Folge des Gespraechs, nicht als Versprechen fuer
+          sich. Quelle der Zusage: src/config/einrichtung.ts (Befund C8). */}
+      <h2>{EINRICHTUNG.gespraech.titel}: wir richten Voxera mit Ihnen ein</h2>
+      <p class="gross leise">{EINRICHTUNG.gespraech.kurz}</p>
+      <p>{EINRICHTUNG.gespraech.lang}</p>
+      <p class="leise hinweis">
+        {EINRICHTUNG.dauer.aussage} {EINRICHTUNG.dauer.abgrenzung}
+      </p>
+      <p class="aktionen">
+        <a class="knopf" href="/demo/">Onboarding-Call vereinbaren</a>
+        <a class="knopf knopf--sekundaer" href="/so-funktionierts/">So funktioniert's</a>
+      </p>
     </div>
   </section>
 
@@ -110,6 +122,8 @@ const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
 <style>
   .hero { padding-block: clamp(56px, 9vw, 120px) var(--vx-section-y); }
   .gross { font-size: var(--vx-text-lg); }
+  .residenz { margin-top: 20px; }
+  .klein { font-size: 13px; }
   .aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .hinweis { margin-top: 16px; font-size: var(--vx-text-sm); }
   .branchen {

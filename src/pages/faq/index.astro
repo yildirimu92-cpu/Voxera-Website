@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
+import { EINRICHTUNG } from '../../config/einrichtung';
+import { DATENRESIDENZ } from '../../config/datenresidenz';
 import { KONDITIONEN } from '../../config/preise';
 
 /**
@@ -42,9 +44,27 @@ const FRAGEN = [
   },
   {
     frage: 'Was passiert mit meinen Daten?',
+    // Erster Absatz wortgleich aus src/config/datenresidenz.ts, damit Hero-Badge,
+    // FAQ und Datenschutzerklaerung nicht auseinanderlaufen. Die Fristen stehen
+    // dahinter, weil sie aus Paragraf 7 der Erklaerung stammen (v2.2).
     antwort:
-      'Ihre Kunden-, Anruf- und Konfigurationsdaten werden in einem Schweizer Rechenzentrum in Zürich gespeichert. Für die Telefonie und die KI-Sprachverarbeitung setzen wir spezialisierte Dienstleister ein; dabei kann eine Übermittlung in die USA erfolgen, abgesichert über EU-Standardvertragsklauseln. Alle Übertragungen sind verschlüsselt. Audioaufzeichnungen und Transkripte werden nach 90 Tagen gelöscht, Anrufdaten nach 180 Tagen. Voxera richtet sich nach dem Schweizer Datenschutzgesetz (revDSG) und, soweit anwendbar, der DSGVO. Die vollständige Liste der Dienstleister mit ihren Datenstandorten steht in der Datenschutzerklärung.',
+      `${DATENRESIDENZ.text} Alle Übertragungen sind verschlüsselt. Audioaufzeichnungen und ` +
+      'Transkripte werden nach 90 Tagen gelöscht, Anrufdaten nach 180 Tagen. Voxera richtet ' +
+      'sich nach dem Schweizer Datenschutzgesetz (revDSG) und, soweit anwendbar, der DSGVO.',
     link: { href: '/datenschutz', text: 'Zur Datenschutzerklärung' },
+  },
+  {
+    frage: 'Wie lange dauert die Einrichtung?',
+    antwort:
+      `${EINRICHTUNG.gespraech.kurz} ${EINRICHTUNG.gespraech.lang} ` +
+      `${EINRICHTUNG.dauer.aussage} ${EINRICHTUNG.dauer.abgrenzung}`,
+    link: { href: '/so-funktionierts/', text: 'Ablauf im Detail' },
+  },
+  {
+    frage: 'An wen wende ich mich, wenn etwas ist?',
+    antwort:
+      `${EINRICHTUNG.support.wegErst} ${EINRICHTUNG.support.telefonisch} ` +
+      `${EINRICHTUNG.support.hinweis}`,
   },
   {
     frage: 'Kann ich jederzeit kündigen?',
@@ -102,13 +122,10 @@ const schema = {
         ))}
       </dl>
 
-      <h2>Wie schnell ist Voxera eingerichtet?</h2>
-      <Platzhalter
-        was="Antwort zur Einrichtungsdauer"
-        befund="C8"
-        wartetAuf="belastbare interne Zusage mit definiertem Support-Prozess"
-      />
-
+      {/* Der gesonderte C8-Block ist entfallen: Einrichtungsdauer und Support
+          stehen jetzt als regulaere Fragen in der Liste oben und damit auch im
+          FAQPage-Schema. Ein zweiter Abschnitt zur selben Frage waere eine
+          weitere Stelle, an der dieselbe Zusage abweichen kann. */}
       <ul role="list" class="konditionen leise klein">
         {KONDITIONEN.map((k) => <li>{k}</li>)}
       </ul>

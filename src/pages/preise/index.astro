@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
-import { PLAENE, AKTION, KONDITIONEN, GEPLANT } from '../../config/preise';
+import { PLAENE, AKTION, KONDITIONEN, GEPLANT, VERGLEICH, VERGLEICH_BELEGT } from '../../config/preise';
 import { SITE } from '../../config/site';
 
 // Offer-Schema aus derselben Quelle wie die Tabelle. priceValidUntil wird nur
@@ -45,24 +45,50 @@ const schema = {
         <strong> Diese Seite geht erst mit den echten Zahlen live.</strong>
       </p>
 
+      {/* Keine Merkmalsmatrix. Eine Haekchen-Tabelle beantwortet „was ist alles
+          drin"; gefragt wird „welcher passt zu mir". Sie verleitet ausserdem
+          dazu, Zeilen zu fuellen — so sind auf der alten Seite Merkmale in
+          Plaene geraten, die es nicht gibt (C7). Stattdessen: Preis, ein Satz
+          zur Zielgruppe, und die drei Zahlen, die sich zwischen den Plaenen
+          tatsaechlich unterscheiden. */}
       <ul role="list" class="plaene">
         {PLAENE.map((p) => (
           <li class="karte" data-hervorgehoben={p.hervorgehoben}>
             <h2>{p.name}</h2>
             <p class="preis">CHF {p.monatlichChf}<span class="leise klein"> / Monat</span></p>
-            <p class="leise klein">Einrichtung einmalig CHF {p.einrichtungChf}.–</p>
-            <ul role="list" class="merkmale">
-              {p.enthalten.map((m) => <li>{m}</li>)}
-              <li>{p.inklusivMinuten} Minuten inklusive</li>
-              <li>CHF {p.zusatzminuteChf.toFixed(2)} pro Zusatzminute</li>
-              {p.nichtEnthalten?.map((m) => <li class="leise">Nicht enthalten: {m}</li>)}
-            </ul>
+            <p class="fuerwen">{p.fuerWen}</p>
+            <dl class="zahlen leise klein">
+              <div><dt>Inklusivminuten</dt><dd>{p.inklusivMinuten}</dd></div>
+              <div><dt>Zusatzminute</dt><dd>CHF {p.zusatzminuteChf.toFixed(2)}</dd></div>
+              <div><dt>Einrichtung einmalig</dt><dd>CHF {p.einrichtungChf}.–</dd></div>
+            </dl>
             {GEPLANT.filter((g) => g.plan === p.id).map((g) => (
               <p class="geplant leise klein">Geplant, noch nicht verfügbar: {g.was}</p>
             ))}
           </li>
         ))}
       </ul>
+
+      <h2 class="folgt">Warum ein Festpreis</h2>
+      <p>
+        Bei nutzungsbasierter Abrechnung steigt die Rechnung genau dann, wenn das
+        Geschäft läuft. Ein Festpreis kostet in ruhigen Monaten etwas mehr und in
+        guten deutlich weniger – vor allem aber steht er vorher fest.
+      </p>
+      {VERGLEICH_BELEGT ? (
+        <p>
+          Bei {VERGLEICH.anrufeProWoche} Anrufen pro Woche
+          à {VERGLEICH.minutenProAnruf} Minuten und CHF {VERGLEICH.chfProMinute} pro Minute
+          ergeben sich rund <strong>CHF {VERGLEICH.monatlichChf} im Monat</strong>.
+          <span class="leise klein"> Grundlage: {VERGLEICH.quelle}</span>
+        </p>
+      ) : (
+        <Platzhalter
+          was={`Rechenweg zur Vergleichszahl von CHF ${VERGLEICH.monatlichChf} bei ${VERGLEICH.anrufeProWoche} Anrufen pro Woche`}
+          befund="C4"
+          wartetAuf="Minuten pro Anruf, Preis pro Minute und die Quelle des Tarifs"
+        />
+      )}
 
       <ul role="list" class="konditionen leise klein">
         {KONDITIONEN.map((k) => <li>{k}</li>)}
@@ -81,7 +107,12 @@ const schema = {
   .plaene [data-hervorgehoben="true"] { border-top: 3px solid var(--vx-accent); }
   .preis { font-family: var(--vx-font-display); font-size: 34px; font-weight: 800; letter-spacing: -.03em; margin-top: 8px; }
   .klein { font-size: 13px; }
-  .merkmale { margin-top: 16px; padding: 0; list-style: none; display: grid; gap: 7px; font-size: var(--vx-text-sm); }
+  .fuerwen { margin-top: 12px; font-size: var(--vx-text-sm); }
+  .zahlen { margin-top: 16px; display: grid; gap: 6px; }
+  .zahlen > div { display: flex; justify-content: space-between; gap: 12px; }
+  .zahlen dt { color: var(--vx-text-muted); }
+  .zahlen dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .folgt { margin-top: var(--vx-section-y); }
   .geplant { margin-top: 12px; font-style: italic; }
   .konditionen { margin-top: 32px; padding: 0; list-style: none; display: grid; gap: 6px; }
 </style>

@@ -1,32 +1,45 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Platzhalter from '../../components/Platzhalter.astro';
+import { EINRICHTUNG } from '../../config/einrichtung';
 
 /**
- * Die drei Schritte sind vom Produktivstand übernommen (index.html, Abschnitt
- * „So funktioniert's") — sie beschreiben den bestehenden Ablauf und brauchen
- * keine Zulieferung.
+ * Die Schritte 2 bis 4 sind vom Produktivstand übernommen (index.html,
+ * Abschnitt „So funktioniert's") — sie beschreiben den bestehenden Ablauf.
  *
- * NICHT übernommen: der Zusatz „Bei allen Anbietern" bei Schritt 2. Das ist
- * eine Absolutaussage, die genau einmal falsch sein muss, um beim Onboarding
- * zu platzen (Content-Audit C5). Sie steht als Platzhalter, bis die getesteten
- * Anbieter bestätigt sind.
+ * NEU als Schritt 1: der Onboarding-Call (Content-Audit C8). Er stand bisher
+ * nirgends, obwohl er tatsächlich am Anfang steht. Die Seite las sich dadurch
+ * wie eine Selbsteinrichtung in zehn Minuten — also wie das Versprechen, mit
+ * dem nutzungsbasierte Anbieter antreten. Der Call ist der Unterschied, nicht
+ * die Geschwindigkeit; er gehört deshalb in die Schrittfolge und nicht in
+ * einen Nebensatz.
+ *
+ * NICHT übernommen: der Zusatz „Bei allen Anbietern" bei der Rufweiterleitung.
+ * Das ist eine Absolutaussage, die genau einmal falsch sein muss, um beim
+ * Onboarding zu platzen (Content-Audit C5). Sie steht als Platzhalter, bis die
+ * getesteten Anbieter bestätigt sind.
  */
 const SCHRITTE = [
   {
     nr: '1',
+    titel: EINRICHTUNG.gespraech.titel,
+    text: EINRICHTUNG.gespraech.lang,
+    dauer: 'Wir melden uns; den Termin bestimmen Sie',
+  },
+  {
+    nr: '2',
     titel: 'Schweizer Nummer aktivieren',
     text: 'Sie erhalten eine Schweizer Nummer mit +41. Wir konfigurieren den Assistenten auf Ihren Betrieb: Begrüssung, Anliegen, Rückfragen, Notfallregeln.',
     dauer: 'Rund 5 Minuten Ihrer Zeit',
   },
   {
-    nr: '2',
+    nr: '3',
     titel: 'Rufweiterleitung einrichten',
     text: 'Ein kurzer Code auf Ihrem Telefon genügt. Ihre Kunden wählen weiterhin Ihre gewohnte Nummer — Voxera schaltet sich nur ein, wenn Sie nicht abnehmen. Sie legen fest, wann das gilt: sofort, nach einer Anzahl Klingelzeichen oder bei besetzt.',
     dauer: 'Rund 5 Minuten, wir begleiten Sie dabei',
   },
   {
-    nr: '3',
+    nr: '4',
     titel: 'Dashboard öffnen – fertig',
     text: 'Jeder Anruf erscheint strukturiert: Zusammenfassung, erfasste Angaben, Dringlichkeit und Status. Sie sehen auf einen Blick, was warten kann und was nicht.',
     dauer: 'Ab dem ersten Anruf',
@@ -34,16 +47,16 @@ const SCHRITTE = [
 ];
 ---
 <Base
-  titel="So funktioniert Voxera – in drei Schritten"
-  beschreibung="Schweizer Nummer aktivieren, Rufweiterleitung einrichten, Dashboard öffnen. Ohne Technikkenntnisse und ohne neue Hardware."
+  titel="So funktioniert Voxera – vom Gespräch bis zum ersten Anruf"
+  beschreibung="Onboarding-Call, Schweizer Nummer, Rufweiterleitung, Dashboard. Wir richten den Assistenten mit Ihnen ein – ohne Technikkenntnisse und ohne neue Hardware."
 >
   <section class="sektion">
     <div class="wrap">
       <hr class="akzentlinie" />
-      <h1>In drei Schritten eingerichtet</h1>
+      <h1>Wir richten Voxera mit Ihnen ein</h1>
       <p class="einstieg leise">
-        Keine neue Hardware, kein Anbieterwechsel, keine Technikkenntnisse. Ihre bestehende
-        Nummer bleibt, wie sie ist.
+        {EINRICHTUNG.gespraech.kurz} Keine neue Hardware, kein Anbieterwechsel, keine
+        Technikkenntnisse. Ihre bestehende Nummer bleibt, wie sie ist.
       </p>
 
       <ol class="schritte">
@@ -78,13 +91,18 @@ const SCHRITTE = [
   <section class="sektion">
     <div class="wrap">
       <h2>Wie lange dauert die Einrichtung insgesamt?</h2>
-      <Platzhalter
-        was="Zusage zur Einrichtungsdauer"
-        befund="C8"
-        wartetAuf="belastbare interne Zusage mit definiertem Support-Prozess"
-      />
+      <p>{EINRICHTUNG.dauer.aussage}</p>
+      <p class="leise klein">{EINRICHTUNG.dauer.abgrenzung}</p>
+
+      <h2 class="folgt">Und wenn später etwas ist?</h2>
+      <p>{EINRICHTUNG.support.wegErst}</p>
+      <p>
+        {EINRICHTUNG.support.telefonisch}{' '}
+        <span class="leise">{EINRICHTUNG.support.hinweis}</span>
+      </p>
+
       <p class="aktionen">
-        <a class="knopf" href="/demo/">Erstgespräch buchen</a>
+        <a class="knopf" href="/demo/">Onboarding-Call vereinbaren</a>
         <a class="knopf knopf--sekundaer" href="/branchen/">Branchen ansehen</a>
       </p>
     </div>
@@ -112,4 +130,5 @@ const SCHRITTE = [
   .dauer { margin-top: 12px; font-size: 13px; }
   .aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
   .klein { font-size: 13px; margin-top: 16px; }
+  .folgt { margin-top: var(--vx-section-y); }
 </style>

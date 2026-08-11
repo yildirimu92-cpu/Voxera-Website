@@ -8,8 +8,17 @@ name: CI
 # JSON-LD, ins Leere zeigenden Preloads und Widerspruechen zwischen noindex
 # und Sitemap.
 #
-# Sichtbare Platzhalter zaehlt er, ohne den Build zu brechen - sie sind ein
-# Go-Live-Kriterium, kein Merge-Kriterium.
+# Sichtbare Platzhalter brechen den Build, sobald `main` das Ziel ist - bei
+# einem Pull Request gegen main und bei jedem Push auf main. Auf Arbeitsbranches
+# bleiben sie eine Meldung.
+#
+# Frueher waren sie ueberall nur eine Meldung, mit dem Hinweis "vor dem Go-Live
+# muss das leer sein". Das war eine Regel, die nichts durchsetzte. Seit voxera.ch
+# aus einem Repo ausgeliefert wird, ist der Merge nach main der Moment, in dem
+# Inhalt Richtung Produktion wandert - dort muss die Pruefung greifen.
+#
+# Die Unterscheidung braucht keinen Schalter: verify-seo.mjs liest
+# GITHUB_BASE_REF und GITHUB_REF, die GitHub Actions ohnehin setzt.
 
 on:
   pull_request:

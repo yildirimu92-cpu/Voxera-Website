@@ -229,18 +229,56 @@ if (jsKb > JS_BUDGET_KB * 3) {
   warnungen.push(`JavaScript ungezippt ${jsKb.toFixed(1)} KB — Budget ist ${JS_BUDGET_KB} KB gzipped, bitte pruefen`);
 }
 
+// Platzhalter: auf dem Weg nach `main` ein Fehler, auf Arbeitsbranches nicht.
+//
+// Bisher wurden sie nur gezaehlt. Der Kommentar darueber sagte „vor dem Go-Live
+// muss diese Zahl null sein" — eine Regel, die nichts durchsetzte. Solange
+// `main` dieses Repos nichts auslieferte, war das folgenlos. Sobald die Domain
+// hierher zeigt, koennte ein Platzhalter mit einem Merge auf voxera.ch landen,
+// gemeldet in einer Zeile, die niemand liest.
+//
+// Warum nicht einfach immer hart: Dann braeche der Build waehrend genau der
+// Arbeit, die die Platzhalter beseitigt — man kann einen Text nicht einbauen,
+// wenn der Build schon vorher rot ist. Die Grenze liegt deshalb dort, wo
+// Inhalt Richtung Produktion wandert, nicht dort, wo daran gearbeitet wird.
+//
+// Kein Schalter, den jemand setzen muss: Die Umgebung sagt es selbst. Bei einem
+// Pull Request nennt GITHUB_BASE_REF den Zielbranch, bei einem Push GITHUB_REF
+// den eigenen. Lokal ist beides leer — dort bleibt es eine Meldung.
+const zielBranch = (process.env.GITHUB_BASE_REF || '').trim();
+const eigenerRef = (process.env.GITHUB_REF || '').trim();
+const nachMain = zielBranch === 'main' || eigenerRef === 'refs/heads/main';
+
+// Nur fuer Tests dieses Waechters. Nicht in der Workflow-Datei setzen — ein
+// Schalter, der Pruefungen abschaltet, wird irgendwann gesetzt und vergessen.
+const uebersteuert = process.env.VX_PLATZHALTER_STRIKT;
+const striktePlatzhalter =
+  uebersteuert === '1' ? true : uebersteuert === '0' ? false : nachMain;
+
+if (offeneStellen.length && striktePlatzhalter) {
+  fehler.push(
+    `${offeneStellen.length} Seite(n) mit sichtbaren Platzhaltern — nach main ist das ein Fehler, ` +
+      `kein Hinweis: ${offeneStellen.join(', ')}`,
+  );
+}
+
 for (const w of warnungen) console.warn(`WARNUNG  ${w}`);
 for (const f of fehler) console.error(`FEHLER   ${f}`);
+
+if (offeneStellen.length) {
+  if (striktePlatzhalter) {
+    console.log('\nOffene Stellen (Platzhalter je Seite) — BLOCKIERT den Merge nach main:');
+  } else {
+    console.log('\nOffene Stellen (Platzhalter je Seite) — vor dem Go-Live muss das leer sein:');
+  }
+  for (const o of offeneStellen) console.log(`  ${o}`);
+}
 
 if (fehlendeAssets.length) {
   console.log('\nFehlende Assets (referenziert, aber nicht im Build) — blockiert den Livegang:');
   for (const a of [...new Set(fehlendeAssets)].sort()) console.log(`  ${a}`);
 }
 
-if (offeneStellen.length) {
-  console.log('\nOffene Stellen (Platzhalter je Seite) — vor dem Go-Live muss das leer sein:');
-  for (const o of offeneStellen) console.log(`  ${o}`);
-}
 
 console.log(`\n${dateien.length} Seiten geprueft — ${fehler.length} Fehler, ${warnungen.length} Warnungen, ${offeneStellen.length} Seiten mit Platzhaltern, ${new Set(fehlendeAssets).size} fehlende Assets.`);
 console.log(`${WORTWOERTLICH.length} aus voxera-website-live uebernommene Seiten vorhanden, von der SEO-Pruefung ausgenommen: ${WORTWOERTLICH.join(', ')}`);

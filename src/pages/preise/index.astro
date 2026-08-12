@@ -1,0 +1,288 @@
+---
+import Base from '../../layouts/Base.astro';
+import {
+  PLAENE,
+  LAUFZEITEN,
+  LAUFZEIT_STANDARD,
+  AKTION,
+  KONDITIONEN,
+  UPSELLS,
+  GEPLANT,
+  GARANTIE,
+  ZUSATZMINUTEN,
+  KUENDIGUNG,
+} from '../../config/preise';
+import { SITE } from '../../config/site';
+
+const bepreist = PLAENE.filter((p) => p.preise);
+
+// Offer-Schema aus derselben Quelle wie die Karten, mit dem Referenzpreis.
+// priceValidUntil wird nur gesetzt, wenn tatsächlich eine Aktion läuft — sonst
+// bliebe ein totes Datum maschinenlesbar in den Suchergebnissen stehen (C1).
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Voxera',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  url: SITE.url,
+  offers: bepreist.map((p) => ({
+    '@type': 'Offer',
+    name: p.name,
+    price: p.preise![LAUFZEIT_STANDARD],
+    priceCurrency: 'CHF',
+    ...(AKTION ? { priceValidUntil: AKTION.gueltigBis } : {}),
+  })),
+};
+
+const guenstigster = Math.min(...bepreist.map((p) => p.preise![LAUFZEIT_STANDARD]));
+---
+<Base
+  titel="Preise | Voxera KI-Telefonassistent"
+  beschreibung={`Vier Pläne ab CHF ${guenstigster} im Monat, inklusive Schweizer Nummer und Dashboard. 14 Tage Zufriedenheitsgarantie auf die Einrichtung.`}
+  schema={schema}
+>
+  <section class="sektion">
+    <div class="wrap">
+      <hr class="akzentlinie" />
+      <h1>Transparent und fair</h1>
+      <p class="einstieg leise">
+        Ein Festpreis pro Monat, eine einmalige Einrichtung. Längere Bindung senkt den
+        Monatspreis, monatliche Kündbarkeit hebt ihn.
+      </p>
+
+      {/* Umschalter über VIER Stufen, nicht zwei.
+          Die SaaS-Konvention „monatlich/jährlich" bildet zwei ab; hier gibt es
+          vier. Zwei Stufen hätten 2 und 3 Jahre verschwinden lassen — und damit
+          den stärksten Bindungsanreiz.
+
+          Alle vier Preissätze stehen im HTML, sichtbar ist einer. Ohne
+          JavaScript zeigt die Seite alle vier untereinander: vollständig
+          lesbar, nur weniger elegant. astro.config.mjs verlangt genau das, und
+          das JS-Budget von 30 KB verträgt keine Bibliothek — es sind zwölf
+          Zeilen am Seitenende. */}
+      <fieldset class="laufzeit" id="laufzeit-wahl">
+        <legend>Vertragslaufzeit</legend>
+        {LAUFZEITEN.map((l) => (
+          <label class="stufe">
+            <input
+              type="radio"
+              name="laufzeit"
+              value={l.id}
+              checked={l.id === LAUFZEIT_STANDARD}
+            />
+            <span class="stufe-label">
+              {l.label}
+              <span class="stufe-faktor leise">{l.faktor}</span>
+            </span>
+          </label>
+        ))}
+      </fieldset>
+
+      {/* Keine Merkmalsmatrix. Eine Häkchen-Tabelle beantwortet „was ist alles
+          drin"; gefragt wird „welcher passt zu mir". Sie verleitet ausserdem
+          dazu, Zeilen zu füllen — so sind auf der alten Seite Merkmale in Pläne
+          geraten, die es nicht gibt (C7). */}
+      <ul role="list" class="plaene">
+        {PLAENE.map((p) => (
+          <li class="karte" data-hervorgehoben={p.hervorgehoben}>
+            <h2>{p.name}</h2>
+
+            {p.preise ? (
+              <>
+                {LAUFZEITEN.map((l) => (
+                  <p class="preis" data-preis={l.id} hidden={l.id !== LAUFZEIT_STANDARD}>
+                    CHF {p.preise![l.id]}<span class="leise klein"> / Monat</span>
+                  </p>
+                ))}
+                <p class="leise klein setup">Einrichtung einmalig CHF {p.einrichtungChf}.–</p>
+              </>
+            ) : (
+              <p class="preis preis--anfrage">Auf Anfrage</p>
+            )}
+
+            <p class="fuerwen">{p.fuerWen}</p>
+            {p.grenze && <p class="grenze leise klein">{p.grenze}</p>}
+
+            <dl class="zahlen leise klein">
+              {p.anrufeProMonat && (
+                <div><dt>Anrufe im Monat</dt><dd>{p.anrufeProMonat}</dd></div>
+              )}
+              {p.inklusivMinuten && (
+                <div><dt>Minuten inklusive</dt><dd>{p.inklusivMinuten}</dd></div>
+              )}
+              <div><dt>Gleichzeitige Anrufe</dt><dd>{p.gleichzeitigeAnrufe}</dd></div>
+              {p.zusatzminuteChf && (
+                <div><dt>Zusatzminute</dt><dd>CHF {p.zusatzminuteChf.toFixed(2)}</dd></div>
+              )}
+            </dl>
+
+            {p.aufAnfrage && (
+              <p class="aktionen">
+                <a class="knopf knopf--sekundaer" href="/kontakt/">Angebot anfragen</a>
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+
+      {/* Zahlungslogik gehört zum gewählten Preis, nicht ins Kleingedruckte —
+          sie unterscheidet sich je Laufzeit. */}
+      {LAUFZEITEN.map((l) => (
+        <p class="zahlung leise klein" data-zahlung={l.id} hidden={l.id !== LAUFZEIT_STANDARD}>
+          {l.zahlung}
+        </p>
+      ))}
+
+      {/* Die Garantie steht hier, unmittelbar nach dem Preis — dort wirkt die
+          Setup-Gebühr, und dort gehört das Gegenargument hin. Ein Block, nicht
+          eine Zeile auf jeder Karte: viermal klein wiederholt verliert es seine
+          Wucht. */}
+      <aside class="garantie">
+        <h2>{GARANTIE.titel}</h2>
+        <p class="gross">{GARANTIE.kern}</p>
+        <p>{GARANTIE.frist}</p>
+        <p>{GARANTIE.umfang}</p>
+        <p class="leise klein">{GARANTIE.ausnahme} {GARANTIE.gilt}</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sektion sektion--warm">
+    <div class="wrap">
+      <h2>Warum ein Festpreis</h2>
+      <p>
+        Bei nutzungsbasierter Abrechnung steigt die Rechnung genau dann, wenn das
+        Geschäft läuft. Ein Festpreis kostet in ruhigen Monaten etwas mehr und in
+        guten deutlich weniger – vor allem aber steht er vorher fest.
+      </p>
+      {/* Bewusst ohne Vergleichszahl gegen einen Wettbewerber. Die Rechnung ist
+          ein Zitat und noch nicht gegen dessen aktuelle Preisseite geprüft; sie
+          steht als eigener Punkt im Fahrplan, nicht als Platzhalter, der diese
+          Seite blockiert. Der Abschnitt trägt auch ohne Zahl — er beschreibt
+          die Bauform der Abrechnung, nicht ihren Betrag. */}
+
+      <h3>Wenn das Kontingent aufgebraucht ist</h3>
+      <p>{ZUSATZMINUTEN.regel}</p>
+      <p class="leise klein">{ZUSATZMINUTEN.beispiel} {ZUSATZMINUTEN.staffelHinweis}</p>
+      <p class="leise klein">{ZUSATZMINUTEN.benachrichtigung}</p>
+    </div>
+  </section>
+
+  <section class="sektion">
+    <div class="wrap">
+      <h2>{KUENDIGUNG.titel}</h2>
+      <p>{KUENDIGUNG.regel}</p>
+      <p class="leise">{KUENDIGUNG.begruendung}</p>
+      <p class="leise klein">{KUENDIGUNG.beispiel}</p>
+      <p class="leise klein">{KUENDIGUNG.setup}</p>
+
+      <h2 class="folgt">Zusätzlich buchbar</h2>
+      <dl class="zusatz">
+        {UPSELLS.map((u) => (
+          <div><dt>{u.was}</dt><dd>{u.preis}</dd></div>
+        ))}
+      </dl>
+
+      {/* Ohne Planzuordnung und ohne Preis. Ein „geplant für Business" hängt
+          die Funktion wieder an eine Preisstufe — schwächer als „enthalten",
+          aber immer noch ein Kaufargument für etwas, das es nicht gibt. */}
+      <h2 class="folgt">Noch nicht verfügbar</h2>
+      <p class="leise">
+        Diese Funktionen sind angekündigt, aber noch nicht abnahmefähig. Sie sind in
+        keinem Plan enthalten und in keinem Preis berücksichtigt.
+      </p>
+      <ul role="list" class="geplant leise klein">
+        {GEPLANT.map((g) => <li>{g}</li>)}
+      </ul>
+
+      <ul role="list" class="konditionen leise klein">
+        {KONDITIONEN.map((k) => <li>{k}</li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Umschalter. Alle Preissätze stehen bereits im HTML; hier wird nur
+  // umgeschaltet. Ohne dieses Skript bleiben alle sichtbar — die Seite ist
+  // dann vollständig, nur länger.
+  const wahl = document.getElementById('laufzeit-wahl');
+  if (wahl) {
+    wahl.addEventListener('change', (e) => {
+      const ziel = (e.target as HTMLInputElement).value;
+      for (const el of document.querySelectorAll<HTMLElement>('[data-preis]')) {
+        el.hidden = el.dataset.preis !== ziel;
+      }
+      for (const el of document.querySelectorAll<HTMLElement>('[data-zahlung]')) {
+        el.hidden = el.dataset.zahlung !== ziel;
+      }
+    });
+  }
+</script>
+
+<noscript>
+  <style>
+    /* Ohne JavaScript alle Laufzeiten zeigen, statt drei zu verstecken. */
+    [data-preis], [data-zahlung] { display: block !important; }
+  </style>
+</noscript>
+
+<style>
+  .einstieg { font-size: var(--vx-text-lg); margin-top: var(--vx-gap-head-body); max-width: var(--vx-measure); }
+
+  .laufzeit {
+    margin-top: 32px; padding: 0; border: 0;
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .laufzeit legend { font-size: 13px; color: var(--vx-text-muted); padding: 0 0 8px; }
+  .stufe { cursor: pointer; }
+  .stufe input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .stufe-label {
+    display: inline-flex; flex-direction: column; gap: 2px;
+    padding: 9px 14px; font-size: var(--vx-text-sm);
+    border: 1px solid var(--vx-hairline-firm); border-radius: var(--vx-radius-sm);
+    transition: border-color var(--vx-motion), background var(--vx-motion);
+  }
+  .stufe input:checked + .stufe-label { border-color: var(--vx-accent); background: var(--vx-recessed); }
+  /* Tastaturbedienung muss sichtbar bleiben — das Radio selbst ist unsichtbar. */
+  .stufe input:focus-visible + .stufe-label { outline: 2px solid var(--vx-accent); outline-offset: 2px; }
+  .stufe-faktor { font-size: 12px; }
+
+  .plaene {
+    display: grid; gap: 16px; margin-top: 32px; padding: 0; list-style: none;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+  /* Hervorhebung ueber eine Goldlinie, nicht ueber eine Goldflaeche mit Text. */
+  .plaene [data-hervorgehoben="true"] { border-top: 3px solid var(--vx-accent); }
+  .preis { font-family: var(--vx-font-display); font-size: 34px; font-weight: 800; letter-spacing: -.03em; margin-top: 8px; }
+  .preis--anfrage { font-size: 26px; }
+  .setup { margin-top: 4px; }
+  .klein { font-size: 13px; }
+  .fuerwen { margin-top: 12px; font-size: var(--vx-text-sm); }
+  .grenze { margin-top: 10px; }
+  .zahlen { margin-top: 16px; display: grid; gap: 6px; }
+  .zahlen > div { display: flex; justify-content: space-between; gap: 12px; }
+  .zahlen dt { color: var(--vx-text-muted); }
+  .zahlen dd { margin: 0; font-variant-numeric: tabular-nums; }
+  .zahlung { margin-top: 16px; }
+
+  .garantie {
+    margin-top: 40px; padding: 24px 26px;
+    border: 1px solid var(--vx-hairline-firm);
+    border-left: 3px solid var(--vx-accent);
+    border-radius: var(--vx-radius-sm);
+    max-width: var(--vx-measure);
+  }
+  .garantie h2 { font-size: var(--vx-text-base); }
+  .garantie p { margin-top: 10px; }
+  .garantie .gross { font-size: var(--vx-text-lg); }
+
+  .zusatz { margin-top: 20px; display: grid; gap: 8px; max-width: var(--vx-measure); }
+  .zusatz > div { display: flex; justify-content: space-between; gap: 16px; font-size: var(--vx-text-sm); }
+  .zusatz dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+  .geplant { margin-top: 16px; padding-left: 18px; }
+  .folgt { margin-top: var(--vx-section-y); }
+  .konditionen { margin-top: 40px; padding: 0; list-style: none; display: grid; gap: 6px; }
+</style>

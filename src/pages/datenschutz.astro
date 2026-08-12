@@ -1,0 +1,255 @@
+---
+/**
+ * Datenschutzerklärung, Version 2.2 vom 10.08.2026.
+ *
+ * Grundlage ist der Text aus voxera-website-live (Version 2.1, Commit
+ * 572bf33) — die Fassung nach dem Content-Hotfix, mit den angepassten
+ * Aufbewahrungsfristen in Abschnitt 7.
+ *
+ * Geändert gegenüber v2.1 ist ausschliesslich Abschnitt 11: Der dort
+ * zitierte Hinweis am Gesprächsanfang beschrieb einen Satz, den der
+ * Assistent nie gesprochen hat. Ausgeliefert wurde bis 10.08.2026 nur die
+ * Aufzeichnungs-Ansage. Behoben ist das in voxera-platform (PR #919); hier
+ * steht jetzt der Satz, der tatsächlich gesprochen wird.
+ *
+ * Zwei Zusagen sind dabei entfallen, beide weil sie nicht eingelöst werden:
+ * die Einwilligung durch Fortführen wird nicht gesprochen, und die
+ * Weiterleitung an einen Menschen gibt es im Produkt gar nicht — dem
+ * Assistenten steht als einziges Werkzeug der Kalender zur Verfügung, eine
+ * Transfer-Funktion existiert nicht. Eine Datenschutzerklärung, die beides
+ * zusichert, wäre in beiden Punkten unzutreffend gewesen.
+ *
+ * Ebenfalls in v2.2: Der Abschnitt, der zuvor „EU AI Act" hiess, zog aus dem
+ * Hinweis eine rechtliche Schlussfolgerung („Voxera ist ein KI-System im
+ * Sinne von Art. 50 … Wir erfüllen die Transparenzpflicht"). Er beschreibt
+ * jetzt nur noch, was das System tut, und ist bis zur juristischen Prüfung
+ * ausdrücklich als vorläufig gekennzeichnet. Eine Datenschutzerklärung soll
+ * Tatsachen benennen; die Subsumtion gehört in die Prüfung, nicht in den
+ * veröffentlichten Text.
+ *
+ * Version und Stand stehen im Vertragsprozess: der Zustimmungsstempel in
+ * public/offer-accept.html verweist auf genau diese Fassung. Wer den Text
+ * ändert, muss die Version hier UND den Stempel dort anheben — sonst
+ * entsteht wieder der Fehler, den der Hotfix behoben hat. Genau deshalb
+ * ist offer-accept.html mit dieser Änderung auf v2.2 gezogen worden und
+ * nicht mehr byte-identisch mit voxera-website-live; dort steht die
+ * Anhebung noch aus.
+ */
+import Recht from '../layouts/Recht.astro';
+---
+<Recht
+  titel="Datenschutzerklärung | Voxera"
+  beschreibung="Welche Daten Voxera erhebt, auf welcher Grundlage, wer sie erhält, wie lange sie gespeichert werden und welche Rechte Sie haben."
+  ueberschrift="Datenschutzerklärung"
+  stand="Stand: 10. August 2026 · Voxera, Schweiz · Version 2.2"
+>
+  <div class="karte">
+    <p>Voxera nimmt den Schutz Ihrer persönlichen Daten ernst. Diese Datenschutzerklärung informiert Sie umfassend darüber, welche Daten wir zu welchem Zweck erheben, an wen wir sie weitergeben und welche Rechte Sie haben.</p>
+  </div>
+
+  <section class="sek">
+    <p class="sek-num">1. Verantwortliche Stelle</p>
+    <h2>Wer ist verantwortlich?</h2>
+    <p>Verantwortlich für die in dieser Erklärung beschriebenen Datenverarbeitungen im Sinne des Schweizerischen Datenschutzgesetzes (revDSG) und – soweit anwendbar – der EU-Datenschutz-Grundverordnung (DSGVO) ist:</p>
+    <div class="karte">
+      <p><strong>Voxera</strong><br />Binsböschenweg 3, 6045 Meggen, Schweiz<br />E-Mail: <a href="mailto:info@voxera.ch">info@voxera.ch</a><br />Web: <a href="https://voxera.ch">www.voxera.ch</a></p>
+    </div>
+    <h3>Besonderheit bei Anrufverarbeitung</h3>
+    <p>Soweit Voxera im Auftrag eines Geschäftskunden (z.B. Arztpraxis, Anwaltskanzlei, KMU) Anrufe entgegennimmt und verarbeitet, ist <strong>der Geschäftskunde</strong> der Datenschutz-Verantwortliche für die Anruferdaten. Voxera handelt dabei als <strong>Auftragsverarbeiter</strong> auf Grundlage eines Auftragsverarbeitungsvertrags (siehe <strong>AVV</strong>).</p>
+    <p>Anfragen von Anrufern bezüglich ihrer Daten richten sich primär an den Geschäftskunden, der angerufen wurde. Voxera unterstützt subsidiär bei berechtigten Anliegen.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">2. Erhobene Daten</p>
+    <h2>Welche Daten wir erheben</h2>
+    <p>Wir erheben und verarbeiten folgende Kategorien personenbezogener Daten:</p>
+    <div class="tabelle-rahmen">
+      <table>
+        <tr><th>Datenkategorie</th><th>Beispiele</th><th>Zweck</th></tr>
+        <tr><td>Kontaktdaten<br />(Voxera-Kunden)</td><td>Firma, Name, E-Mail, Telefon, Adresse, UID</td><td>Vertragsabwicklung, Kommunikation, Abrechnung</td></tr>
+        <tr><td>Anrufdaten<br />(Anrufer beim Voxera-Kunden)</td><td>Rufnummer, Audioaufzeichnung, Transkript, Datum/Uhrzeit, Dauer, Gesprächszusammenfassung</td><td>Erbringung des KI-Telefonassistenten im Auftrag des Voxera-Kunden</td></tr>
+        <tr><td>Dashboard-Nutzungsdaten</td><td>Login-Zeiten, IP-Adresse, genutzte Funktionen</td><td>Bereitstellung des Kundenportals, Sicherheit</td></tr>
+        <tr><td>Zahlungsdaten</td><td>Rechnungsadresse, Zahlungsbestätigungen</td><td>Abrechnung. Hinweis: Kreditkartendaten werden ausschliesslich beim Zahlungsdienstleister gespeichert, nicht bei Voxera</td></tr>
+        <tr><td>Technische Daten</td><td>IP-Adresse, Browser, Gerät, Logs</td><td>Sicherheit, Fehleranalyse, technischer Betrieb</td></tr>
+        <tr><td>Konfigurationsdaten</td><td>Begrüssungstexte, KI-Anweisungen, Geschäftslogik</td><td>Personalisierung des KI-Assistenten</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">3. Rechtsgrundlagen</p>
+    <h2>Auf welcher Basis verarbeiten wir Daten?</h2>
+    <p>Wir verarbeiten personenbezogene Daten ausschliesslich auf einer der folgenden Rechtsgrundlagen:</p>
+    <ul>
+      <li><strong>Vertragserfüllung</strong> (Art. 31 Abs. 2 lit. a revDSG / Art. 6 Abs. 1 lit. b DSGVO): Daten, die zur Erbringung unserer Dienstleistung erforderlich sind</li>
+      <li><strong>Berechtigte Interessen</strong> (Art. 31 Abs. 2 lit. b revDSG / Art. 6 Abs. 1 lit. f DSGVO): Sicherheit, Betrugsprävention, technische Optimierung, soweit Ihre Interessen nicht überwiegen</li>
+      <li><strong>Einwilligung</strong> (Art. 31 Abs. 1 revDSG / Art. 6 Abs. 1 lit. a DSGVO): Soweit Sie für bestimmte Verarbeitungen ausdrücklich eingewilligt haben (z.B. Marketing-Newsletter)</li>
+      <li><strong>Gesetzliche Verpflichtung</strong> (Art. 31 Abs. 2 lit. c revDSG / Art. 6 Abs. 1 lit. c DSGVO): Insbesondere Buchführungs- und Aufbewahrungspflichten</li>
+    </ul>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">4. Verwendungszwecke</p>
+    <h2>Wie wir Ihre Daten nutzen</h2>
+    <ul>
+      <li>Bereitstellung und Betrieb des KI-Telefonassistenten</li>
+      <li>Anzeige von Anrufdaten, Transkripten und Auswertungen im Kunden-Dashboard</li>
+      <li>Rechnungsstellung und Vertragsabwicklung</li>
+      <li>Technischer Support und Kundenkommunikation</li>
+      <li>Verbesserung unserer Dienstleistungen (in aggregierter, nicht-personenbezogener Form)</li>
+      <li>Einhaltung gesetzlicher Verpflichtungen</li>
+      <li>Sicherheits- und Betrugsprävention</li>
+    </ul>
+    <p><strong>Wir verkaufen Ihre Daten nicht.</strong> Wir verwenden Anrufinhalte oder personenbezogene Daten <strong>nicht für das Training</strong> unserer KI-Modelle und auch nicht für das Training von KI-Modellen Dritter, soweit dies nicht durch eine spezifische Funktion mit Ihrer ausdrücklichen Einwilligung erfolgt.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">5. Empfänger und Sub-Auftragsverarbeiter</p>
+    <h2>Wer erhält Ihre Daten?</h2>
+    <p>Wir geben personenbezogene Daten nur weiter, soweit dies zur Erbringung unserer Dienstleistung erforderlich ist. Wir nutzen dafür sorgfältig ausgewählte Drittanbieter (Sub-Auftragsverarbeiter), mit denen wir Auftragsverarbeitungsverträge (DPA) abgeschlossen haben.</p>
+    <p>Es kommen folgende <strong>Kategorien</strong> von Empfängern und Sub-Auftragsverarbeitern zum Einsatz:</p>
+    <div class="tabelle-rahmen">
+      <table>
+        <tr><th>Kategorie</th><th>Zweck</th><th>Datenstandort</th></tr>
+        <tr><td><strong>Telefonie-Infrastruktur</strong></td><td>Bereitstellung der Voxera-Rufnummern, Anrufweiterleitung, Sprachübertragung</td><td>Schweiz / EU / USA</td></tr>
+        <tr><td><strong>KI-Sprachdienste</strong></td><td>Spracherkennung, Sprachverstehen, Sprachsynthese, Verarbeitung der Anrufinhalte</td><td>USA</td></tr>
+        <tr><td><strong>Cloud-Datenbank und Authentifizierung</strong></td><td>Sichere Speicherung von Kunden-, Anruf- und Konfigurationsdaten</td><td>Schweiz (primärer Datenstandort)</td></tr>
+        <tr><td><strong>Web-Hosting</strong></td><td>Bereitstellung der Webanwendung und Website</td><td>EU / USA</td></tr>
+        <tr><td><strong>Workflow- und E-Mail-Dienste</strong></td><td>Versand transaktionaler E-Mails (Rechnungen, Benachrichtigungen)</td><td>EU</td></tr>
+        <tr><td><strong>Zahlungsdienstleister</strong></td><td>Abwicklung von Zahlungen (sofern angewendet)</td><td>EU / USA</td></tr>
+      </table>
+    </div>
+    <p>Geschäftskunden (B2B) erhalten im Rahmen des <strong>Auftragsverarbeitungsvertrags (AVV)</strong> die vollständige Liste der eingesetzten Sub-Auftragsverarbeiter mit Anbieternamen und Datenstandorten. Anrufer und sonstige Betroffene können diese Liste auf begründete Anfrage unter <a href="mailto:info@voxera.ch">info@voxera.ch</a> erhalten.</p>
+    <p>Voxera informiert Vertragskunden mindestens 30 Tage im Voraus über beabsichtigte Änderungen der eingesetzten Sub-Auftragsverarbeiter und gibt ihnen die Möglichkeit, der Änderung aus berechtigtem Grund zu widersprechen.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">6. Datenübermittlung in Drittländer</p>
+    <h2>Übermittlung in die USA und ausserhalb der EU/CH</h2>
+    <p>Einige unserer Sub-Auftragsverarbeiter haben ihren Hauptsitz in den USA. Bei der Verarbeitung Ihrer Daten kann eine Übermittlung in die USA erfolgen, insbesondere im Rahmen der KI-Sprachverarbeitung und Telefonie-Infrastruktur.</p>
+    <p>Wir stellen ein angemessenes Datenschutzniveau wie folgt sicher:</p>
+    <ul>
+      <li><strong>EU-Standardvertragsklauseln (SCC):</strong> Wir haben mit allen US-Anbietern die von der Europäischen Kommission genehmigten Standardvertragsklauseln abgeschlossen</li>
+      <li><strong>Technische Massnahmen:</strong> Verschlüsselung der Datenübertragung (TLS), Zugriffskontrollen, Pseudonymisierung wo möglich</li>
+      <li><strong>Organisatorische Massnahmen:</strong> Vertragliche Verpflichtungen unserer Sub-Auftragsverarbeiter zur Einhaltung des Datenschutzes</li>
+      <li><strong>Datenminimierung:</strong> Wir übermitteln nur Daten, die für die jeweilige Leistung zwingend erforderlich sind</li>
+      <li><strong>Datenresidenz Schweiz:</strong> Die zentrale Datenbank von Voxera wird in einem Rechenzentrum in der Schweiz betrieben</li>
+    </ul>
+    <p>Trotz dieser Massnahmen können wir nicht ausschliessen, dass US-Behörden unter bestimmten Umständen (z.B. nach dem CLOUD Act) Zugriff auf bei US-Anbietern gespeicherte Daten verlangen. Wir informieren transparent darüber.</p>
+    <p>Auf Anfrage übermitteln wir Ihnen Kopien der abgeschlossenen Standardvertragsklauseln.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">7. Speicherdauer</p>
+    <h2>Wie lange speichern wir Ihre Daten?</h2>
+    <div class="tabelle-rahmen">
+      <table>
+        <tr><th>Datenart</th><th>Speicherdauer</th></tr>
+        <tr><td>Audio-Aufzeichnungen von Anrufen</td><td>90 Tage nach Anruf, danach Löschung</td></tr>
+        <tr><td>Transkripte</td><td>90 Tage nach Anruf, danach Löschung</td></tr>
+        <tr><td>Anrufdaten und Gesprächszusammenfassungen</td><td>180 Tage nach Anruf, danach Löschung</td></tr>
+        <tr><td>Kunden- und Vertragsdaten</td><td>Während der Vertragsdauer + 10 Jahre (gesetzliche Aufbewahrung gem. OR)</td></tr>
+        <tr><td>Rechnungsdaten</td><td>10 Jahre (Schweizer Buchführungspflicht)</td></tr>
+        <tr><td>Kontaktanfragen ohne Vertragsabschluss</td><td>2 Jahre nach letztem Kontakt</td></tr>
+        <tr><td>Technische Logs (Server, Sicherheit)</td><td>Maximal 90 Tage</td></tr>
+        <tr><td>Marketing-Einwilligungen</td><td>Bis zum Widerruf der Einwilligung</td></tr>
+      </table>
+    </div>
+    <p>Im Falle der Vertragsbeendigung werden personenbezogene Daten gelöscht oder anonymisiert, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Daten, die ausschliesslich aufgrund gesetzlicher Aufbewahrungspflichten weitergespeichert werden, werden für andere Zwecke gesperrt.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">8. Datensicherheit</p>
+    <h2>Wie schützen wir Ihre Daten?</h2>
+    <p>Wir treffen umfangreiche technische und organisatorische Massnahmen, um Ihre Daten vor unberechtigtem Zugriff, Verlust oder Manipulation zu schützen:</p>
+    <ul>
+      <li><strong>Verschlüsselung:</strong> Alle Datenübertragungen erfolgen verschlüsselt über TLS/HTTPS. Daten in Datenbanken sind im Ruhezustand verschlüsselt (AES-256)</li>
+      <li><strong>Zugriffskontrolle:</strong> Strikte Berechtigungsverwaltung, Mehr-Faktor-Authentifizierung für Voxera-Mitarbeiter, Need-to-know-Prinzip</li>
+      <li><strong>Datenresidenz:</strong> Die Hauptdatenbank wird in der Schweiz (Zürich) betrieben</li>
+      <li><strong>Sicherheits-Updates:</strong> Regelmässige Aktualisierungen aller Systemkomponenten, Patch-Management</li>
+      <li><strong>Backup und Wiederherstellung:</strong> Regelmässige Backups der Daten, dokumentierte Wiederherstellungsprozesse</li>
+      <li><strong>Audit-Logs:</strong> Protokollierung aller Zugriffe auf personenbezogene Daten</li>
+      <li><strong>Vendor-Sicherheit:</strong> Sorgfältige Auswahl und vertragliche Verpflichtung aller Sub-Auftragsverarbeiter</li>
+    </ul>
+    <p>Bei einem Datenschutzvorfall mit hohem Risiko informieren wir den Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) sowie die Betroffenen unverzüglich gemäss den gesetzlichen Vorgaben.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">9. Cookies und Webanalyse</p>
+    <h2>Cookies und Tracking</h2>
+    <p>Unsere Website (voxera.ch) und Webanwendungen (admin.voxera.ch, dashboard.voxera.ch) verwenden technisch notwendige Cookies für den Betrieb, die Sicherheit und die Authentifizierung. Diese Cookies sind erforderlich, um die Funktionsfähigkeit der Anwendung zu gewährleisten.</p>
+    <p>Wir verwenden <strong>keine Tracking-, Analyse- oder Werbe-Cookies</strong> ohne Ihre Einwilligung. Soweit wir in Zukunft optionale Webanalyse-Tools einsetzen, werden Sie über einen Cookie-Banner um Ihre Einwilligung gebeten.</p>
+    <p>Wenn Sie unser Kontaktformular nutzen, werden die eingegebenen Daten ausschliesslich zur Bearbeitung Ihrer Anfrage verarbeitet.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">10. Ihre Rechte</p>
+    <h2>Datenschutzrechte der betroffenen Personen</h2>
+    <p>Sie haben gegenüber uns die folgenden Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:</p>
+    <div class="tabelle-rahmen">
+      <table>
+        <tr><th>Recht</th><th>Was bedeutet das?</th></tr>
+        <tr><td><strong>Auskunft</strong><br />(Art. 25 revDSG / Art. 15 DSGVO)</td><td>Sie können jederzeit Auskunft darüber verlangen, welche personenbezogenen Daten wir zu Ihrer Person speichern</td></tr>
+        <tr><td><strong>Berichtigung</strong><br />(Art. 32 revDSG / Art. 16 DSGVO)</td><td>Unrichtige oder unvollständige Daten können Sie durch uns korrigieren lassen</td></tr>
+        <tr><td><strong>Löschung</strong><br />(Art. 32 revDSG / Art. 17 DSGVO)</td><td>Sie können die Löschung Ihrer Daten verlangen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen</td></tr>
+        <tr><td><strong>Einschränkung</strong><br />(Art. 18 DSGVO)</td><td>Sie können verlangen, dass wir die Verarbeitung einschränken</td></tr>
+        <tr><td><strong>Datenübertragbarkeit</strong><br />(Art. 28 revDSG / Art. 20 DSGVO)</td><td>Sie haben das Recht, Ihre Daten in einem strukturierten, maschinenlesbaren Format zu erhalten</td></tr>
+        <tr><td><strong>Widerspruch</strong><br />(Art. 30 revDSG / Art. 21 DSGVO)</td><td>Sie können der Verarbeitung Ihrer Daten widersprechen, insbesondere bei Verarbeitung auf Grundlage berechtigter Interessen</td></tr>
+        <tr><td><strong>Widerruf von Einwilligungen</strong></td><td>Erteilte Einwilligungen können Sie jederzeit mit Wirkung für die Zukunft widerrufen</td></tr>
+      </table>
+    </div>
+    <h3>Wie Sie Ihre Rechte ausüben können</h3>
+    <p>Senden Sie uns eine Anfrage an <a href="mailto:info@voxera.ch">info@voxera.ch</a>. Zur Identifikation kann eine Identitätsprüfung erforderlich sein. Wir beantworten Anfragen grundsätzlich innerhalb von 30 Tagen kostenlos. Bei offensichtlich unbegründeten oder exzessiven Anfragen können wir ein angemessenes Entgelt verlangen oder die Bearbeitung verweigern.</p>
+    <h3>Anrufer-Anfragen</h3>
+    <p>Wenn Sie als Anrufer (nicht als Voxera-Vertragskunde) eine Anfrage zu Ihren Daten haben, wenden Sie sich bitte primär an das Unternehmen, das Sie angerufen haben (den Voxera-Geschäftskunden). Voxera unterstützt subsidiär bei berechtigten Anliegen.</p>
+    <h3>Beschwerderecht</h3>
+    <p>Sie haben das Recht, sich bei einer Aufsichtsbehörde zu beschweren. In der Schweiz ist dies der <strong>Eidgenössische Datenschutz- und Öffentlichkeitsbeauftragte (EDÖB)</strong>, Feldeggweg 1, 3003 Bern, <a href="https://www.edoeb.admin.ch">www.edoeb.admin.ch</a>. Für EU-Bürger gelten die jeweils zuständigen nationalen Aufsichtsbehörden.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">11. KI-Telefonie</p>
+    <h2>Besonderheiten bei der KI-Telefonie</h2>
+    <p>Im Rahmen unseres KI-Telefonassistenten («Lara») werden Telefongespräche automatisch entgegengenommen, transkribiert und mittels KI verarbeitet.</p>
+    <h3>Hinweis am Gesprächsanfang</h3>
+    <p>Voxera stellt sicher, dass jeder Anrufer zu Beginn des Gesprächs in folgender oder vergleichbarer Form informiert wird:</p>
+    <div class="karte">
+      <p>«Grüezi, hier spricht [Name], die digitale Assistentin von [Kundenname], das Gespräch wird aufgezeichnet. Wie kann ich Ihnen helfen?»</p>
+    </div>
+    <p>Der Hinweis wird technisch erzwungen und lässt sich nicht abschalten: Auch wenn ein Geschäftskunde eine eigene Begrüssung hinterlegt, wird er ihr vorangestellt.</p>
+    <h3>Verarbeitete Daten</h3>
+    <ul>
+      <li><strong>Audio des Gesprächs:</strong> Verarbeitung in Echtzeit; kurzfristige Zwischenspeicherung im Rahmen des technisch Notwendigen</li>
+      <li><strong>Transkript des Gesprächs:</strong> Speicherung gemäss den oben genannten Speicherfristen</li>
+      <li><strong>Metadaten:</strong> Anrufzeit, Telefonnummer (sofern übermittelt), Anrufdauer, Gesprächszusammenfassung</li>
+    </ul>
+    <h3>Kennzeichnung gegenüber Anrufenden</h3>
+    <p>Voxera informiert Anrufende zu Beginn jedes Gesprächs, dass sie mit einer digitalen Assistentin sprechen und dass das Gespräch aufgezeichnet wird. Der Hinweis ist Teil der Begrüssung und wird bei jedem Anruf ausgegeben.</p>
+    <p><em>Vorläufig:</em> Die rechtliche Einordnung dieser Kennzeichnung wird derzeit geprüft. Dieser Abschnitt beschreibt bis dahin ausschliesslich das tatsächliche Verhalten des Systems und trifft keine Aussage über die Erfüllung bestimmter gesetzlicher Vorgaben.</p>
+    <h3>Verantwortlichkeit</h3>
+    <ul>
+      <li><strong>Für die Verarbeitung von Anruferdaten</strong> ist primär unser Geschäftskunde (das Unternehmen, das Sie angerufen haben) verantwortlich. Voxera handelt als Auftragsverarbeiter.</li>
+      <li><strong>Für die Voxera-eigene Verarbeitung</strong> (Vertragsdaten unserer Geschäftskunden, Plattform-Nutzung, technischer Betrieb) ist Voxera selbst verantwortlich.</li>
+    </ul>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">12. Datenschutz-Folgenabschätzung</p>
+    <h2>DSFA und besondere Schutzmassnahmen</h2>
+    <p>Aufgrund der Natur der KI-gestützten Anrufverarbeitung haben wir eine Datenschutz-Folgenabschätzung (DSFA) gemäss Art. 22 revDSG / Art. 35 DSGVO durchgeführt. Wir haben angemessene technische und organisatorische Massnahmen ergriffen, um identifizierte Risiken zu minimieren.</p>
+    <p>Bei besonders sensiblen Branchen (z.B. Arztpraxen, Anwaltskanzleien) empfehlen wir unseren Kunden, ihrerseits eine eigene Datenschutz-Folgenabschätzung durchzuführen und uns gegebenenfalls bei Rückfragen zu kontaktieren.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">13. Änderungen dieser Erklärung</p>
+    <h2>Aktualisierungen</h2>
+    <p>Wir können diese Datenschutzerklärung anpassen, um sie an neue gesetzliche Anforderungen, geänderte Verarbeitungsprozesse oder neue Sub-Auftragsverarbeiter anzupassen. Wesentliche Änderungen kommunizieren wir aktiv (z.B. per E-Mail an Vertragskunden). Die jeweils aktuelle Version finden Sie unter <a href="https://voxera.ch/datenschutz">voxera.ch/datenschutz</a>.</p>
+  </section>
+
+  <section class="sek">
+    <p class="sek-num">Kontakt</p>
+    <h2>Datenschutz-Anfragen</h2>
+    <div class="karte">
+      <p><strong>Voxera</strong><br />Binsböschenweg 3, 6045 Meggen, Schweiz<br />E-Mail: <a href="mailto:info@voxera.ch">info@voxera.ch</a><br /><br />Wir beantworten Datenschutzanfragen grundsätzlich innerhalb von 30 Tagen.</p>
+    </div>
+  </section>
+</Recht>

@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import { BRANCHEN_SICHTBAR } from '../config/site';
+import { PLAENE } from '../config/preise';
+import { EINRICHTUNG } from '../config/einrichtung';
+import { DATENRESIDENZ } from '../config/datenresidenz';
+
+const guenstigster = Math.min(...PLAENE.map((p) => p.monatlichChf));
+---
+<Base
+  titel="KI-Telefonassistent für Schweizer KMU | Voxera"
+  beschreibung={`Voxera nimmt Ihre Anrufe entgegen, fasst zusammen und priorisiert – damit Sie keinen Auftrag mehr verpassen. Ab CHF ${guenstigster}/Monat.`}
+>
+  {/* Kein Hintergrundbild im Hero. Typografie plus ein Produkt-Screenshot ist
+      bei einer hellen Richtung der staerkere Einstieg und die beste
+      Ausgangslage fuer den LCP-Wert (Zielbild C.1). */}
+  <section class="sektion hero">
+    <div class="wrap">
+      <hr class="akzentlinie" />
+      <h1>Kein Anruf mehr verpasst.<br />Voxera übernimmt.</h1>
+      <p class="gross leise">
+        Voxera nimmt Ihre Anrufe entgegen, fasst zusammen und priorisiert – damit Sie sich
+        auf die Arbeit konzentrieren können, für die Sie gerufen werden.
+      </p>
+      <p class="aktionen">
+        <a class="knopf" href="/demo/">Erstgespräch vereinbaren</a>
+        <a class="knopf knopf--sekundaer" href="/preise/">Preise</a>
+      </p>
+      {/* Nennt die Datenbank, nicht „die Daten". Die alte Seite trug hier
+          „ausschliesslich in der Schweiz" — das war nicht knapper, sondern
+          falsch, weil Telefonie und Sprachverarbeitung ausserhalb laufen. */}
+      <p class="residenz leise klein">{DATENRESIDENZ.badge}</p>
+    </div>
+  </section>
+
+  <section class="sektion sektion--zurueckgesetzt">
+    <div class="wrap">
+      {/* Hier standen vier Vergleichszahlen: 62 % / 3.4 h / CHF 4'500 und
+          72 % zum Anrufbeantworter (Befund C4). Sie sind gestrichen, nicht
+          vertagt -- fuer keine war eine Quelle dokumentiert.
+
+          An ihrer Stelle steht jetzt eine Begebenheit des Gruenders. Der
+          Unterschied ist nicht Stilistik: Eine Statistik ueber fremde Betriebe
+          braucht einen Beleg, ein eigenes Erlebnis nicht. Die CHF 5'000 sind
+          deshalb keine Kennzahl, sondern ein Betrag aus einem einzelnen Fall,
+          und der Text sagt das auch.
+
+          Das „vielleicht" im vorletzten Absatz bleibt stehen. Ohne dieses Wort
+          verspricht der Text, dass Voxera Auftraege rettet; mit ihm verspricht
+          er die Chance, es zu versuchen. */}
+      <h2>Ein Kunde wollte mich weiterempfehlen. Ich habe es einen Tag zu spät erfahren.</h2>
+      <div class="geschichte">
+        <p>
+          Ein bestehender Kunde rief an. Ein Kollege von ihm brauchte eine Website — er wollte
+          ihm meinen Namen geben. Ich war unterwegs, beim nächsten Kunden. Ich habe mich am
+          folgenden Tag gemeldet. Da war der Auftrag schon vergeben. CHF 5'000.
+        </p>
+        <p>
+          Ich war nicht nachlässig. Ich war am Arbeiten. Genau deshalb konnte ich nicht ans
+          Telefon — und genau deshalb habe ich nicht einmal gewusst, dass ich gerade etwas
+          verpasse.
+        </p>
+        <p>
+          Das ist der Teil, der wirklich weh tut: Ein verpasster Anruf hinterlässt nichts.
+          Keine Nummer, kein Anliegen, keinen Hinweis auf Dringlichkeit. Es ist ein Auftrag,
+          von dem Sie nie erfahren, dass es ihn gab.
+        </p>
+        <p>
+          Hätte ich am Abend gewusst, dass jemand angerufen hat, worum es geht und dass es
+          eilt — ich hätte noch am selben Abend zurückgerufen. Vielleicht wäre der Auftrag
+          dann noch frei gewesen.
+        </p>
+      </div>
+      <p class="leise hinweis">
+        Voxera setzt dort an, wo niemand abnehmen kann: ausserhalb der Bürozeiten,
+        während der Arbeit am Kunden, wenn die Leitung besetzt ist.
+      </p>
+    </div>
+  </section>
+
+  <section class="sektion">
+    <div class="wrap">
+      <h2>Voxera passt zu Ihrer Branche</h2>
+      <p class="leise">
+        Der Assistent kennt die typischen Anliegen Ihrer Branche – und stellt die Rückfragen,
+        die Sie sonst selbst stellen würden.
+      </p>
+      <ul role="list" class="branchen">
+        {BRANCHEN_SICHTBAR.map((b) => (
+          <li>
+            <a class="karte" href={`/branchen/${b.slug}/`}>
+              <h3>{b.titel}</h3>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Sand: genau EINE Flaeche pro Seite. Hier ist sie. */}
+  <section class="sektion sektion--warm">
+    <div class="wrap">
+      {/* Fuehrt mit dem Gespraech, nicht mit der Dauer. Die Geschwindigkeit ist
+          die Achse, auf der nutzungsbasierte Anbieter antreten; die 24 Stunden
+          stehen deshalb als Folge des Gespraechs, nicht als Versprechen fuer
+          sich. Quelle der Zusage: src/config/einrichtung.ts (Befund C8). */}
+      <h2>{EINRICHTUNG.gespraech.titel}: wir richten Voxera mit Ihnen ein</h2>
+      <p class="gross leise">{EINRICHTUNG.gespraech.kurz}</p>
+      <p>{EINRICHTUNG.gespraech.lang}</p>
+      <p class="leise hinweis">
+        {EINRICHTUNG.dauer.aussage} {EINRICHTUNG.dauer.abgrenzung}
+      </p>
+      <p class="aktionen">
+        <a class="knopf" href="/demo/">Onboarding-Call vereinbaren</a>
+        <a class="knopf knopf--sekundaer" href="/so-funktionierts/">So funktioniert's</a>
+      </p>
+    </div>
+  </section>
+
+  {/* Kein Testimonial-Block. Es gibt keine freigegebenen Kundenstimmen — die
+      alte Seite trug drei ungedeckte (C16). Vertrauen entsteht hier ueber
+      Erstgespraech, Ablauf, Preise und Rechtsrahmen. Sobald die Demonummer
+      steht, kommt der staerkste Beleg dazu: selbst anrufen. */}
+</Base>
+
+<script>
+  // Die alte Seite war ein One-Pager; ihre Anker stehen in E-Mails und
+  // Offerten. Fragmente erreichen den Server nie, deshalb hier clientseitig.
+  const ZIELE = {
+    '#wie': '/so-funktionierts/',
+    '#features': '/so-funktionierts/',
+    '#preise': '/preise/',
+    '#pricing': '/preise/',
+    '#branchen': '/branchen/',
+    '#beratung': '/demo/',
+    '#demo': '/demo/',
+    '#kontakt': '/kontakt/',
+    '#faq': '/faq/',
+  };
+  const ziel = ZIELE[location.hash];
+  if (ziel) location.replace(ziel);
+</script>
+
+<style>
+  .hero { padding-block: clamp(56px, 9vw, 120px) var(--vx-section-y); }
+  .gross { font-size: var(--vx-text-lg); }
+  .residenz { margin-top: 20px; }
+  .klein { font-size: 13px; }
+  .geschichte { max-width: var(--vx-measure); margin-top: var(--vx-gap-head-body); }
+  .geschichte p + p { margin-top: 16px; }
+  .aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hinweis { margin-top: 16px; font-size: var(--vx-text-sm); }
+  .branchen {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-top: 32px;
+    list-style: none;
+    padding: 0;
+  }
+  .branchen a { display: block; text-decoration: none; color: inherit; transition: border-color var(--vx-motion); }
+  .branchen a:hover { border-color: var(--vx-hairline-firm); }
+  .branchen h3 { font-size: var(--vx-text-base); }
+</style>

@@ -1,0 +1,173 @@
+---
+import Base from '../../layouts/Base.astro';
+import Platzhalter from '../../components/Platzhalter.astro';
+import { EINRICHTUNG } from '../../config/einrichtung';
+
+/**
+ * Die Schritte 2 bis 4 sind vom Produktivstand übernommen (index.html,
+ * Abschnitt „So funktioniert's") — sie beschreiben den bestehenden Ablauf.
+ *
+ * NEU als Schritt 1: der Onboarding-Call (Content-Audit C8). Er stand bisher
+ * nirgends, obwohl er tatsächlich am Anfang steht. Die Seite las sich dadurch
+ * wie eine Selbsteinrichtung in zehn Minuten — also wie das Versprechen, mit
+ * dem nutzungsbasierte Anbieter antreten. Der Call ist der Unterschied, nicht
+ * die Geschwindigkeit; er gehört deshalb in die Schrittfolge und nicht in
+ * einen Nebensatz.
+ *
+ * NICHT übernommen: der Zusatz „Bei allen Anbietern" bei der Rufweiterleitung.
+ * Das ist eine Absolutaussage, die genau einmal falsch sein muss, um beim
+ * Onboarding zu platzen (Content-Audit C5). Die Nachprüfung hat ergeben, dass
+ * es die erwartete Liste getesteter Anbieter nie gab — Begründung und neue
+ * Fassung stehen beim Abschnitt selbst, weiter unten.
+ */
+const SCHRITTE = [
+  {
+    nr: '1',
+    titel: EINRICHTUNG.gespraech.titel,
+    text: EINRICHTUNG.gespraech.lang,
+    dauer: 'Wir melden uns; den Termin bestimmen Sie',
+  },
+  {
+    nr: '2',
+    titel: 'Schweizer Nummer aktivieren',
+    text: 'Sie erhalten eine Schweizer Nummer mit +41. Wir konfigurieren den Assistenten auf Ihren Betrieb: Begrüssung, Anliegen, Rückfragen, Notfallregeln.',
+    dauer: 'Rund 5 Minuten Ihrer Zeit',
+  },
+  {
+    nr: '3',
+    titel: 'Rufweiterleitung einrichten',
+    text: 'Ein kurzer Code auf Ihrem Telefon genügt. Ihre Kunden wählen weiterhin Ihre gewohnte Nummer — Voxera schaltet sich nur ein, wenn Sie nicht abnehmen. Sie legen fest, wann das gilt: sofort, nach einer Anzahl Klingelzeichen oder bei besetzt.',
+    dauer: 'Rund 5 Minuten, wir begleiten Sie dabei',
+  },
+  {
+    nr: '4',
+    titel: 'Dashboard öffnen – fertig',
+    text: 'Jeder Anruf erscheint strukturiert: Zusammenfassung, erfasste Angaben, Dringlichkeit und Status. Sie sehen auf einen Blick, was warten kann und was nicht.',
+    dauer: 'Ab dem ersten Anruf',
+  },
+];
+---
+<Base
+  titel="So funktioniert Voxera – vom Gespräch bis zum ersten Anruf"
+  beschreibung="Onboarding-Call, Schweizer Nummer, Rufweiterleitung, Dashboard. Wir richten den Assistenten mit Ihnen ein – ohne Technikkenntnisse und ohne neue Hardware."
+>
+  <section class="sektion">
+    <div class="wrap">
+      <hr class="akzentlinie" />
+      <h1>Wir richten Voxera mit Ihnen ein</h1>
+      <p class="einstieg leise">
+        {EINRICHTUNG.gespraech.kurz} Keine neue Hardware, kein Anbieterwechsel, keine
+        Technikkenntnisse. Ihre bestehende Nummer bleibt, wie sie ist.
+      </p>
+
+      <ol class="schritte">
+        {SCHRITTE.map((s) => (
+          <li class="karte">
+            <span class="nr" aria-hidden="true">{s.nr}</span>
+            <h2>{s.titel}</h2>
+            <p class="leise">{s.text}</p>
+            <p class="dauer leise">{s.dauer}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="sektion sektion--warm">
+    <div class="wrap">
+      {/* C5 aufgeloest — aber anders als geplant.
+          Der Platzhalter wartete auf die Liste der getesteten Anbieter. Die
+          Nachpruefung hat ergeben, dass es sie nie gab: Der Content-Audit haelt
+          fest „Im Repo findet sich keine Kompatibilitaetsmatrix", und eine
+          eigene Suche ueber voxera-platform bestaetigt das. Anbieternamen
+          kommen dort nur im Kunden-Dashboard vor, als Auswahl fuer die
+          Einrichtungscodes (Swisscom, Sunrise, Salt, UPC/Quickline, anderes
+          Mobilfunknetz, Festnetz) — das belegt die Absicht, sie zu
+          unterstuetzen, nicht einen Test.
+
+          Die vier namentlich genannten Anbieter sind deshalb bewusst als
+          Aussage ueber das DASHBOARD formuliert ("die Einrichtungscodes liegen
+          bereit") und nicht als Testnachweis ("geprueft mit"). Das ist
+          nachpruefbar — die Codes stehen dort — und behauptet nichts, was
+          niemand belegt hat.
+
+          Auf eine Liste zu warten, die nie entstehen wird, haette den Go-Live
+          unbegrenzt blockiert. Die Aussage stuetzt sich deshalb auf das, was
+          belegbar ist: Rufweiterleitung ist eine Standardfunktion Schweizer
+          Anschluesse, und die Einrichtung passiert ohnehin im Onboarding-Call.
+          Damit wird nichts Geprueftes behauptet — und der Satz haelt auch dann,
+          wenn ein Anbieter einmal anders funktioniert. */}
+      <h2>Funktioniert das mit meinem Telefonanbieter?</h2>
+      <p>
+        Funktioniert mit allen gängigen Schweizer Anbietern; die Einrichtung besprechen
+        wir im Onboarding-Call. Für <strong>Swisscom, Sunrise, Salt und UPC/Quickline</strong>
+        liegen die Einrichtungscodes bereit.
+      </p>
+      <p class="leise klein">
+        Die Rufweiterleitung ist eine Standardfunktion Schweizer Anschlüsse. Wie sie auf
+        Ihrem Anschluss eingerichtet wird, sehen wir uns gemeinsam an – statt eines
+        pauschalen „funktioniert überall".
+      </p>
+    </div>
+  </section>
+
+  <section class="sektion">
+    <div class="wrap">
+      <h2>Wie lange dauert die Einrichtung insgesamt?</h2>
+      <p>{EINRICHTUNG.dauer.aussage}</p>
+      <p class="leise klein">{EINRICHTUNG.dauer.abgrenzung}</p>
+
+      {/* Einwandbehandlung, bewusst nach dem Ablauf: Wer bis hierher liest,
+          hat den Einwand schon im Kopf.
+
+          Der letzte Satz bleibt eine FRAGE. Als Behauptung — „die meisten
+          sprechen nicht auf die Combox" — waere er eine quantitative Aussage
+          ueber Schweizer Anrufer, und dafuer gibt es keinen zitierfaehigen
+          Beleg. Genau diese Zahl (72 %) stand auf der alten Seite und ist mit
+          C4 gestrichen worden. Als Frage ueberlaesst der Text die Antwort dem
+          Leser, der sie fuer seinen eigenen Betrieb ohnehin besser kennt. */}
+      <h2 class="folgt">„Meine Kunden wollen keinen Roboter am Telefon."</h2>
+      <p>
+        Verständlich. Aber die Alternative ist kein Mensch. Die Alternative ist die Combox.
+        Oder es klingelt einfach zwanzig Mal.
+      </p>
+      <p>Und wenn Sie ehrlich sind: Wie viele Ihrer Anrufer sprechen auf die Combox?</p>
+
+      <h2 class="folgt">Und wenn später etwas ist?</h2>
+      <p>{EINRICHTUNG.support.wegErst}</p>
+      <p>
+        {EINRICHTUNG.support.telefonisch}{' '}
+        <span class="leise">{EINRICHTUNG.support.hinweis}</span>
+      </p>
+
+      <p class="aktionen">
+        <a class="knopf" href="/demo/">Onboarding-Call vereinbaren</a>
+        <a class="knopf knopf--sekundaer" href="/branchen/">Branchen ansehen</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .einstieg { font-size: var(--vx-text-lg); margin-top: var(--vx-gap-head-body); }
+  .schritte {
+    margin-top: 40px; padding: 0; list-style: none;
+    display: grid; gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    counter-reset: schritt;
+  }
+  .schritte h2 { font-size: var(--vx-text-base); margin: 12px 0 8px; }
+  .schritte p { font-size: var(--vx-text-sm); }
+  .nr {
+    display: inline-grid; place-items: center;
+    width: 30px; height: 30px;
+    font-family: var(--vx-font-display); font-weight: 800; font-size: 14px;
+    /* Gold als Flaeche mit Night-Text darauf — nicht als Textfarbe. */
+    background: var(--vx-accent); color: var(--vx-text);
+    border-radius: 999px;
+  }
+  .dauer { margin-top: 12px; font-size: 13px; }
+  .aktionen { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .klein { font-size: 13px; margin-top: 16px; }
+  .folgt { margin-top: var(--vx-section-y); }
+</style>

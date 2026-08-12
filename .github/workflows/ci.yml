@@ -1,0 +1,47 @@
+name: CI
+
+# `npm run build` ist hier zweistufig: erst `astro build`, dann
+# `scripts/verify-seo.mjs` gegen das erzeugte dist/. Der Waechter bricht den
+# Build bei fehlendem Titel oder fehlender Description, doppelten Titeln,
+# fehlendem oder mehrfachem Canonical, Bildern ohne width/height,
+# abgelaufenem priceValidUntil, Schriften vom Google-CDN, Platzhaltertext in
+# JSON-LD, ins Leere zeigenden Preloads und Widerspruechen zwischen noindex
+# und Sitemap.
+#
+# Sichtbare Platzhalter brechen den Build, sobald `main` das Ziel ist - bei
+# einem Pull Request gegen main und bei jedem Push auf main. Auf Arbeitsbranches
+# bleiben sie eine Meldung.
+#
+# Frueher waren sie ueberall nur eine Meldung, mit dem Hinweis "vor dem Go-Live
+# muss das leer sein". Das war eine Regel, die nichts durchsetzte. Seit voxera.ch
+# aus einem Repo ausgeliefert wird, ist der Merge nach main der Moment, in dem
+# Inhalt Richtung Produktion wandert - dort muss die Pruefung greifen.
+#
+# Die Unterscheidung braucht keinen Schalter: verify-seo.mjs liest
+# GITHUB_BASE_REF und GITHUB_REF, die GitHub Actions ohnehin setzt.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build und SEO-Waechter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Abhaengigkeiten installieren
+        run: npm ci
+
+      - name: Build und Pruefung
+        run: npm run build

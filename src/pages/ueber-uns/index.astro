@@ -1,7 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Platzhalter from '../../components/Platzhalter.astro';
+import { Image } from 'astro:assets';
 import { SITE } from '../../config/site';
+import portrait from '../../assets/umut-yildirim.jpg';
 
 /**
  * Gründerprofil. Text vom Betreiber, wortgleich übernommen.
@@ -44,12 +45,22 @@ import { SITE } from '../../config/site';
         </p>
       </div>
 
-      {/* Sobald die Datei da ist: src/assets/README.md nennt Pfad, Format und
-          den Dreizeiler zum Einbinden. Der Platzhalter faellt mit derselben
-          Aenderung weg. */}
-      <Platzhalter
-        was="Foto des Gründers"
-        wartetAuf="Bilddatei nach src/assets/umut-yildirim.jpg (Hochformat, ab 800 px kurze Kante)"
+      {/* Anzeigebreite 200, nicht 480.
+          Die gelieferte Datei ist 400x400. Bei 200 CSS-Pixeln liefert sie auf
+          einem Bildschirm mit doppelter Pixeldichte exakt die noetige Aufloesung
+          — bei 480 muesste hochskaliert werden, und die Pipeline rechnet
+          herunter, aber nie hinauf. Ein unscharfes Portrait auf der Seite, die
+          Vertrauen tragen soll, waere der schlechtere Tausch.
+
+          Kommt die Originaldatei in groesserer Aufloesung nach, kann die Breite
+          steigen: 480 braucht 960 px Quelle. */}
+      <Image
+        src={portrait}
+        alt="Umut Yildirim, Gründer von Voxera"
+        width={200}
+        height={200}
+        loading="lazy"
+        class="portrait"
       />
 
       <p class="ort leise klein">
@@ -63,6 +74,7 @@ import { SITE } from '../../config/site';
   .profil { max-width: var(--vx-measure); margin-top: var(--vx-gap-head-body); }
   .profil p + p { margin-top: 16px; }
   .gross { font-size: var(--vx-text-lg); }
+  .portrait { margin-top: 32px; border-radius: var(--vx-radius-sm); display: block; }
   .ort { margin-top: 24px; }
   .klein { font-size: 13px; }
 </style>

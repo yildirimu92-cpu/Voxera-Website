@@ -45,20 +45,28 @@ import portrait from '../../assets/umut-yildirim.jpg';
         </p>
       </div>
 
-      {/* Anzeigebreite 200, nicht 480.
-          Die gelieferte Datei ist 400x400. Bei 200 CSS-Pixeln liefert sie auf
-          einem Bildschirm mit doppelter Pixeldichte exakt die noetige Aufloesung
-          — bei 480 muesste hochskaliert werden, und die Pipeline rechnet
-          herunter, aber nie hinauf. Ein unscharfes Portrait auf der Seite, die
-          Vertrauen tragen soll, waere der schlechtere Tausch.
+      {/* Quadratisch zugeschnitten, Anzeigebreite 440.
+          Die Quelle ist 882x953, also nicht quadratisch. Das entschiedene
+          Format ist 1:1 — der Zuschnitt passiert deshalb beim Build, nicht im
+          Browser: Sonst laedt jeder Besucher Bildbereiche herunter, die er
+          nicht zu sehen bekommt.
 
-          Kommt die Originaldatei in groesserer Aufloesung nach, kann die Breite
-          steigen: 480 braucht 960 px Quelle. */}
+          `position="top"` statt der Mitte: Beim Zuschnitt auf 882x882 fallen
+          71 Pixel weg. Zentriert kaemen davon 35 oben ab und schnitten ins
+          Haar; von oben ausgerichtet faellt alles unten weg, wo nur Jackett
+          ist.
+
+          440 ist keine runde Zahl, sondern die Obergrenze: Auf einem Bildschirm
+          mit doppelter Pixeldichte braucht sie 880 Quellpixel, vorhanden sind
+          882. Groesser waere hochgerechnet, und die Pipeline rechnet herunter,
+          nie hinauf. */}
       <Image
         src={portrait}
         alt="Umut Yildirim, Gründer von Voxera"
-        width={200}
-        height={200}
+        width={440}
+        height={440}
+        fit="cover"
+        position="top"
         loading="lazy"
         class="portrait"
       />
